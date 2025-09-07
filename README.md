@@ -1,4 +1,4 @@
-x# 🌟 Zarbank – Modern Banking Website  
+# 🌟 Zarbank – Modern Banking Website  
 
 Welcome to **Zarbank**, a next-generation digital banking website built with **Tailwind CSS** and **JavaScript**. Zarbank is designed to combine **beauty, performance, and simplicity**. With its **professional UI/UX**, this project is perfect for fintech startups, personal portfolios, or anyone who wants to showcase a modern, banking-style web application.  
 
@@ -17,13 +17,13 @@ Welcome to **Zarbank**, a next-generation digital banking website built with **T
 > *"A digital banking design that looks real, feels premium, and inspires trust."*  
 
 📷 **Homepage** – Hero section with call-to-action, navigation with dropdown and mobile hamburger menu, smooth gradients and professional typography.  
-![Homepage Screenshot](assets/homepage.png)  
+![Homepage Screenshot](assets/homepage.PNG)  
 
 📷 **Services Section** – Banking products and services, cards styled with Tailwind utilities.  
-![Services Screenshot](assets/services.png)  
+![Services Screenshot](assets/services.PNG)  
 
 📷 **Interactive Elements** – Hover effects, animated buttons, overlays.  
-![Interactive Screenshot](assets/Team.png)  
+![Interactive Screenshot](assets/Team.PNG)  
 ---
 
 ## 🛠️ Tech Stack  
