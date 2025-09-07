@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="assets/logo.PNG" class="h-5">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Service Details</title>
+</head>
+
+<body class="bg-white text-black transition-colors duration-500">
+
+  <!-- Scroll Button --> <button id="scrollBtn"
+    class="fixed bottom-6 left-6 w-12 h-12 flex items-center justify-center rounded-full bg-[#12a16b] text-white shadow-lg hover:bg-[#0e8c59] transform hover:-translate-y-1 transition duration-300 z-50">
+    <i id="scrollIcon" class="fa-solid fa-arrow-down"></i> </button>
+
+  <!-- User Icon -->
+  <div id="floatingUserIcon"
+    class="fixed bottom-5 right-5 w-12 h-12 rounded-full overflow-hidden cursor-pointer z-50 shadow-lg border border-gray-300">
+    <img id="miniDp" src="assets/user.jpg" alt="User" class="w-full h-full object-cover">
+  </div>
+
+<!-- Banner Section -->
+<div class="relative h-[300px] sm:h-[280px] lg:h-[300px] w-full">
+  <!-- Background Image -->
+  <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/banner.jpeg');"></div>
+
+  <!-- Dark Overlay -->
+  <div class="absolute inset-0 bg-black/80"></div>
+
+  <!-- Navbar -->
+  <div id="navbar"
+    class="w-full py-3 flex items-center justify-between relative z-20 sm:justify-between lg:px-10 2xl:px-10 sticky top-0 bg-transparent transition-all duration-300">
+    
+    <!-- Left Logo -->
+    <div class="flex">
+      <img src="assets/logo.PNG" alt="ZarBank Logo" class="lg:h-14 h-14 ml-0">
+      <span class="text-3xl font-bold -ml-1 mt-2.5 text-[#12a16b]">Bank</span>
+    </div>
+
+    <!-- Hamburger Icon (Mobile) -->
+    <button id="menuBtn" class="sm:block md:block lg:hidden relative w-7 h-7 ml-auto">
+      <!-- Hamburger -->
+      <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        class="absolute top-0 left-0 w-7 h-7 text-white transition-all duration-[300ms] ease">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+      <!-- Cross -->
+      <svg id="closeIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        class="absolute top-0 left-0 w-7 h-7 text-white opacity-0 rotate-90 transition-all duration-[300ms] ease">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <!-- Desktop Menu -->
+        <!-- Desktop Menu -->
+        <nav class="hidden lg:block lg:m-auto lg:block ">
+            <ul class="flex gap-6 items-center text-white">
+
+                <li><a href="#home"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Home</a>
+                </li>
+                <li><a href="#about"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">About</a></li>
+
+
+
+                <!-- Services -->
+                <li class="relative">
+                    <a href="javascript:void(0)" onclick="toggleDropdown('servicesMenu','servicesIcon')"
+                        class="flex items-center gap-1 nav-link hover:text-[#12a16b] transition-all duration-[100ms] ease">
+                        Services
+                        <svg id="servicesIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </a>
+                    <ul id="servicesMenu" class="absolute -left-40 mt-2 hidden border border-gray-700 rounded-xl shadow-md p-5 w-[250px] space-y-2 hover:-translate-y-1 hover:shadow-2xl
+              focus-visible:-translate-y-1 focus-visible:shadow-2xl bg-white/1 backdrop-blur">
+                        <li><a href="#accountopening"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Account
+                                Opening</a></li>
+                        <li><a href="#savings"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Savings
+                                & Deposits</a></li>
+                        <li><a href="#creditcards"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Credit
+                                Cards</a>
+                        </li>
+                        <li><a href="#loans"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Loans &
+                                Financing</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Loans -->
+                <li class="relative">
+                    <a href="javascript:void(0)" onclick="toggleDropdown('loansMenu','loansIcon')"
+                        class="flex items-center gap-1 nav-link hover:text-[#12a16b] transition-all duration-[100ms] ease">
+                        Loans
+                        <svg id="loansIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </a>
+                    <ul id="loansMenu" class="absolute left-0 mt-2 hidden border border-gray-700 rounded-xl shadow-md p-5 w-[250px] space-y-2 hover:-translate-y-1 hover:shadow-2xl
+              focus-visible:-translate-y-1 focus-visible:shadow-2xl bg-white/1 backdrop-blur">
+                        <li><a href="#standard"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Standard</a>
+                        </li>
+                        <li><a href="#professional"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Professional</a>
+                        </li>
+                        <li><a href="#ultimate"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Ultimate</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#testimonials"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Reviews</a>
+                </li>
+                <li><a href="#team"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Team</a>
+                </li>
+                <li><a href="#contact"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Contact</a>
+                </li>
+            </ul>
+        </nav>
+
+    <!-- Desktop Button -->
+    <a href="register.html" class="hidden lg:block">
+      <button class="text-white bg-gradient-to-br from-[#14b87a] via-[#12a16b] to-[#0e8055] rounded-full py-2 px-5">
+        Click Now
+      </button>
+    </a>
+  </div>
+<!-- Mobile menu -->
+ <div id="mobileMenu"
+        class="lg:hidden hidden px-4 py-4 border border-transparent z-100 relative flex flex-col bg-black/60 backdrop-blur text-white justify-between">
+        <div class="">
+            <ul class="space-y-3">
+
+                <li><a href="#home"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Home</a>
+                </li>
+                <li><a href="#about"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">About</a></li>
+
+                <!-- Services (Mobile Dropdown) -->
+                <li>
+                    <button onclick="toggleDropdown('servicesMenuMobile','servicesIconMobile')"
+                        class="flex items-center gap-1 w-full cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">
+                        Services
+                        <svg id="servicesIconMobile" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                    <ul id="servicesMenuMobile" class="hidden pl-4 mt-2 space-y-2">
+                        <li><a href="#accountopening"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Account
+                                Opening</a></li>
+                        <li><a href="#savings"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Savings
+                                & Deposits</a></li>
+                        <li><a href="#creditcards"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Credit
+                                Cards</a>
+                        </li>
+                        <li><a href="#loans"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Loans &
+                                Financing</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Loans (Mobile Dropdown) -->
+                <li>
+                    <button onclick="toggleDropdown('loansMenuMobile','loansIconMobile')"
+                        class="flex items-center gap-1 w-full cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">
+                        Loans
+                        <svg id="loansIconMobile" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                    <ul id="loansMenuMobile" class="hidden pl-4 mt-2 space-y-2">
+                        <li><a href="#standard"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Standard</a>
+                        </li>
+                        <li><a href="#professional"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Professional</a>
+                        </li>
+                        <li><a href="#ultimate"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Ultimate</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#testimonials"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Reviews</a>
+                </li>
+                <li><a href="#team"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Team</a>
+                </li>
+                <li><a href="#contact"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <!-- Center Button (Mobile) -->
+        <div>
+            <a href="register.html">
+                <button type="button" class="text-white bg-gradient-to-r from-[#14b87a] via-[#12a16b] to-[#0e8055] hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-[#12a16acb] dark:focus:ring-green-900
+ font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 cursor-pointer whitespace-nowrap w-full mt-5"
+                    onclick="window.location.href='Loginform.html'">Click
+                    Now</button>
+            </a>
+        </div>
+
+    </div>
+
+  <!-- Banner Text -->
+  <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4 sm:px-10 z-0 lg:mt-7">
+    <h1 class="md:text-5xl font-bold mb-3 text-3xl">Service Details</h1>
+    <p class="text-lg sm:text-xl mb-4 max-w-2xl">
+      Open accounts, manage savings, get credit cards, and access loans with secure banking services.
+    </p>
+    <div class="flex">
+      <a href="index.html" class="text-[#12a16b] hover:text-[#0e8557]">Home</a>
+      <span> <span class="text-gray-400">&nbsp;/</span> Service Details</span>
+    </div>
+  </div>
+</div>
+
+  
+
+  <!-- Service Details Section -->
+  <section id="service-details" class="py-16 bg-white">
+    <div class="container mx-auto px-4 sm:px-10 xl:px-20 grid lg:grid-cols-12 gap-8">
+
+      <!-- Left Content -->
+      <div class="lg:col-span-8 space-y-8">
+
+        <!-- Hero Image -->
+        <div class="relative">
+          <img src="assets/service.webp" alt="Banking Service" class="w-full rounded-2xl shadow-lg">
+          <div class="absolute top-4 left-4 bg-[#12a16b] text-white px-4 py-2 rounded-full text-sm font-semibold">
+            Premium Service
+          </div>
+        </div>
+
+        <!-- Service Header -->
+        <div>
+          <h2 class="text-3xl font-bold text-[#0A3223] mb-2 2xl:text-4xl">Comprehensive Banking Solutions</h2>
+          <p class="text-gray-600 2xl:text-xl">Open accounts, manage deposits, apply for loans, and access a full range
+            of banking services efficiently with our secure and modern banking solutions.</p>
+        </div>
+
+        <!-- Features -->
+        <div>
+          <h4 class="text-xl font-semibold mb-4 2xl:text-2xl">What You'll Get</h4>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div
+              class="flex space-x-4 border-2 bg-white border-gray-200 hover:drop-shadow-xl hover:shadow-emerald-300 p-3 rounded-xl hover:-translate-y-0.5 transition-all duration-[200ms] ease-in">
+              <div class="text-[#12a16b] text-3xl text-center bg-[#E7F5F0] rounded-full px-4 py-1 content-center">
+                <i class="fa-solid fa-building-columns"></i>
+              </div>
+              <div>
+                <h5 class="font-semibold text-gray-800">Account Opening</h5>
+                <p class="text-gray-600 text-sm">Fast and verified account opening with minimal documentation.</p>
+              </div>
+            </div>
+
+            <div
+              class="flex space-x-4 border-2 bg-white border-gray-200 hover:drop-shadow-xl hover:shadow-emerald-300 p-3 rounded-xl hover:-translate-y-0.5 transition-all duration-[200ms] ease-in">
+              <div class="text-[#12a16b] text-3xl text-center bg-[#E7F5F0] rounded-full px-4 py-1 content-center">
+                <i class="fa-solid fa-piggy-bank"></i>
+              </div>
+              <div>
+                <h5 class="font-semibold text-gray-800">Savings & Deposits</h5>
+                <p class="text-gray-600 text-sm">Grow your wealth securely with fixed deposits and savings accounts.</p>
+              </div>
+            </div>
+
+            <div
+              class="flex space-x-4 border-2 bg-white border-gray-200 hover:drop-shadow-xl hover:shadow-emerald-300 p-3 rounded-xl hover:-translate-y-0.5 transition-all duration-[200ms] ease-in">
+              <div class="text-[#12a16b] text-3xl text-center bg-[#E7F5F0] rounded-full px-4 py-1 content-center">
+                <i class="fa-solid fa-credit-card"></i>
+              </div>
+              <div>
+                <h5 class="font-semibold text-gray-800">Credit Cards</h5>
+                <p class="text-gray-600 text-sm">Apply for credit cards with fast approval and secure transactions.</p>
+              </div>
+            </div>
+
+            <div
+              class="flex space-x-4 border-2 bg-white border-gray-200 hover:drop-shadow-xl hover:shadow-emerald-300 p-3 rounded-xl hover:-translate-y-0.5 transition-all duration-[200ms] ease-in">
+              <div class="text-[#12a16b] text-3xl text-center bg-[#E7F5F0] rounded-full px-4 py-1 content-center">
+                <i class="fa-solid fa-university"></i>
+              </div>
+              <div>
+                <h5 class="font-semibold text-gray-800">Loans & Financing</h5>
+                <p class="text-gray-600 text-sm">Personal and business loans with flexible repayment plans.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Process Steps -->
+        <div class="relative">
+          <h4 class="text-xl font-semibold mb-4 2xl:text-2xl">Our Process</h4>
+          <div class="space-y-6 relative">
+
+            <!-- Vertical Line -->
+            <div class="absolute top-5 bottom-0 left-5 w-[2px] bg-[#89cfb7]"></div>
+
+            <div class="flex space-x-4 relative z-10">
+              <div
+                class="flex-shrink-0 bg-[#12a16b] text-white w-10 h-10 flex items-center justify-center rounded-full font-bold">
+                01</div>
+              <div>
+                <h5 class="font-semibold text-gray-800 2xl:text-xl">Discovery & Analysis</h5>
+                <p class="text-gray-600 text-sm 2xl:text-[15px]">Understanding client needs, analyzing requirements, and
+                  planning the right banking solutions.</p>
+              </div>
+            </div>
+
+            <div class="flex space-x-4 relative z-10">
+              <div
+                class="flex-shrink-0 bg-[#12a16b] text-white w-10 h-10 flex items-center justify-center rounded-full font-bold">
+                02</div>
+              <div>
+                <h5 class="font-semibold text-gray-800 2xl:text-xl">Strategy Development</h5>
+                <p class="text-gray-600 text-sm 2xl:text-[15px]">Creating an actionable plan to manage accounts,
+                  deposits, and loans efficiently.</p>
+              </div>
+            </div>
+
+            <div class="flex space-x-4 relative z-10">
+              <div
+                class="flex-shrink-0 bg-[#12a16b] text-white w-10 h-10 flex items-center justify-center rounded-full font-bold">
+                03</div>
+              <div>
+                <h5 class="font-semibold text-gray-800 2xl:text-xl">Implementation</h5>
+                <p class="text-gray-600 text-sm 2xl:text-[15px]">Executing banking services including account creation,
+                  card issuance, and loan processing.</p>
+              </div>
+            </div>
+
+            <div class="flex space-x-4 relative z-10">
+              <div
+                class="flex-shrink-0 bg-[#12a16b] text-white w-10 h-10 flex items-center justify-center rounded-full font-bold">
+                04</div>
+              <div>
+                <h5 class="font-semibold text-gray-800 2xl:text-xl">Monitoring & Optimization</h5>
+                <p class="text-gray-600 text-sm 2xl:text-[15px]">Continuous support, monitoring accounts, and optimizing
+                  financial services for efficiency.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <!-- Gallery -->
+        <div>
+          <h4 class="text-xl font-semibold mb-4">Project Showcase</h4>
+          <div class="grid md:grid-cols-2 gap-4">
+            <img src="assets/saving.jpg" alt="" class="w-full h-64 object-cover rounded-lg shadow-md">
+            <img src="assets/money.jpg" alt="" class="w-full h-64 object-cover rounded-lg shadow-md">
+            <img src="assets/team.jpg" alt="" class="w-full h-64 object-cover rounded-lg shadow-md">
+            <img src="assets/bank.jpg" alt="" class="w-full h-64 object-cover rounded-lg shadow-md">
+          </div>
+        </div>
+
+
+      </div>
+
+      <!-- Right Sidebar -->
+      <div class="lg:col-span-4 space-y-8">
+
+        <!-- Services Menu -->
+        <div class="bg-white rounded-2xl border-1 border-gray-200 border p-6 space-y-4">
+          <h4 class="font-semibold text-gray-800 2xl:text-xl">Our Services</h4>
+          <div class="space-y-2">
+            <a href="#"
+              class="flex items-center text-[#12a16b] font-semibold hover:text-[#0f6d48] transition-all duration-[200ms] ease-in hover:translate-x-1">
+              <i class="fa-solid fa-arrow-right mr-2"></i> Account Opening
+            </a>
+            <hr class="broder-gray-200 border-1">
+            <a href="#"
+              class="flex items-center text-gray-600 font-semibold hover:text-[#12a16b] transition-all duration-[200ms] ease-in hover:translate-x-1">
+              <i class="fa-solid fa-arrow-right mr-2"></i> Savings & Deposits
+            </a>
+            <hr class="broder-gray-200 border-1">
+            <a href="#"
+              class="flex items-center text-gray-600 font-semibold hover:text-[#12a16b] transition-all duration-[200ms] ease-in hover:translate-x-1">
+              <i class="fa-solid fa-arrow-right mr-2"></i> Credit Cards
+            </a>
+            <hr class="broder-gray-200 border-1">
+            <a href="#"
+              class="flex items-center text-gray-600 font-semibold hover:text-[#12a16b] transition-all duration-[200ms] ease-in hover:translate-x-1">
+              <i class="fa-solid fa-arrow-right mr-2"></i> Loans & Financing
+            </a>
+          </div>
+        </div>
+
+        <!-- Info Card -->
+        <div class="bg-white rounded-2xl border-1 border-gray-200 border p-6 space-y-4">
+          <h4 class="font-semibold text-gray-800 2xl:text-xl">Service Details</h4>
+          <div class="space-y-2">
+            <div class="flex justify-between">
+              <span class="font-bold text-black">Duration:</span>
+              <span class="text-[#12a16b] font-bold">3-6 months</span>
+            </div>
+            <hr class="broder-gray-200 border-1">
+            <div class="flex justify-between">
+              <span class="font-bold text-black">Team Size:</span>
+              <span class="text-[#12a16b] font-bold">4-6 specialists</span>
+            </div>
+            <hr class="broder-gray-200 border-1">
+            <div class="flex justify-between">
+              <span class="font-bold text-black">Delivery:</span>
+              <span class="text-[#12a16b] font-bold">Bi-weekly reports</span>
+            </div>
+            <hr class="broder-gray-200 border-1">
+            <div class="flex justify-between">
+              <span class="font-bold text-black">Support:</span>
+              <span class="text-[#12a16b] font-bold">24/7 monitoring</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Card -->
+        <div class="bg-[#0F8A5B] rounded-2xl shadow-lg p-6 space-y-4">
+          <h4 class="font-semibold text-white 2xl:text-xl">Need Help?</h4>
+          <p class="text-white">Contact our banking experts anytime for assistance with accounts, loans, or deposits.
+          </p>
+          <div class="space-y-2">
+            <div class="flex items-center space-x-2 text-white">
+              <i class="fa-solid fa-phone"></i>
+              <span>+92 300 1234567</span>
+            </div>
+            <div class="flex items-center space-x-2 text-white">
+              <i class="fa-solid fa-envelope"></i>
+              <span>info@bankexample.com</span>
+            </div>
+          </div>
+          <a href="#"
+            class="block bg-white hover:bg-gray-100 text-[#12a16b] text-center py-3 rounded-full font-semibold mt-2 hover:bg-[#0f6d48] transition-all duration-[200ms] ease-in hover:-translate-y-0.5">Get
+            Quote</a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="bg-[#000704] text-gray-300 pt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-10 lg:px-20 2xl:px-0 ">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-10 ">
+
+
+        <!-- About Section -->
+        <div class="">
+          <a href="index.html" class="flex items-center mb-4">
+            <img src="assets/logo.PNG" alt="ZarBank Logo" class="lg:h-14  h-14 ml-0 ">
+            <span class="text-3xl font-bold -ml-1  text-[#12a16b]">Bank</span>
+          </a>
+          <p class="text-sm leading-relaxed md:text-xl">
+            Info Bank is your trusted platform for knowledge, resources, and banking solutions.
+            Stay updated with the latest insights and manage your financial journey with ease.
+          </p>
+          <div class="flex space-x-4 mt-4">
+            <a href="#"
+              class="hover:text-emerald-500 border-[1px] border-gray-200 hover:border-[#12a16b] rounded-full px-2 py-1 transition-all duration-[200px] ease-in -mr-0.5"><i
+                class="fa-brands fa-twitter"></i></a>
+            <a href="#"
+              class="hover:text-emerald-500 border-[1px] border-gray-200 hover:border-[#12a16b] rounded-full px-2 py-1 transition-all duration-[200px] ease-in"><i
+                class="fa-brands fa-facebook"></i></a>
+            <a href="#"
+              class="hover:text-emerald-500 border-[1px] border-gray-200 hover:border-[#12a16b] rounded-full px-2 py-1 transition-all duration-[200px] ease-in"><i
+                class="fa-brands fa-instagram"></i></a>
+            <a href="#"
+              class="hover:text-emerald-500 border-[1px] border-gray-200 hover:border-[#12a16b] rounded-full px-2 py-1 transition-all duration-[200px] ease-in"><i
+                class="fa-brands fa-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="sm:flex sm:gap-14 grid sm:space-y-0 space-y-5 md:grid md:grid-cols-2 lg:flex lg:gap-30 xl:gap-36">
+          <!-- Useful Links -->
+          <div class="sm:none text-center lg:text-left">
+            <h4 class="text-white text-lg font-semibold mb-4 border-l-[3px] border-emerald-500 pl-2">
+              Useful Links</h4>
+            <ul class="space-y-2">
+              <li><a href="#" class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Home</a>
+              </li>
+              <li><a href="#" class="hover:text-emerald-500 transition-all duration-[200px] ease-in">About
+                  Us</a></li>
+              <li><a href="#" class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Services</a>
+              </li>
+              <li><a href="#" class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Terms
+                  of Service</a></li>
+              <li><a href="#" class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Privacy
+                  Policy</a></li>
+            </ul>
+          </div>
+
+          <!-- Services -->
+          <div class="lg:flex lg:gap-28 xl:gap-32">
+            <div class="sm:none text-center">
+              <h4 class="text-white text-lg font-semibold mb-4 border-l-[3px] border-emerald-500 pl-2">
+                Our
+                Services</h4>
+              <ul class="space-y-2">
+                <li><a href="#" class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Banking
+                    Solutions</a></li>
+                <li><a href="#" class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Investment
+                    Plans</a></li>
+                <li><a href="#" class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Financial
+                    Advisory</a></li>
+                <li><a href="#" class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Digital
+                    Banking</a></li>
+                <li><a href="#" class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Customer
+                    Support</a></li>
+              </ul>
+            </div>
+            <div class="grid text-center content-center md:hidden lg:block">
+              <div>
+                <h4 class="text-white text-lg font-semibold mb-4">
+                  Contact Us</h4>
+                <p>A108 Adam Street</p>
+                <p>New York, NY 535022</p>
+                <p>United States</p>
+                <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+                <p><strong>Email:</strong> <span class="text-[#12a16b]">info@infobank.com</span></p>
+              </div>
+            </div>
+          </div>
+          <!-- Contact -->
+          <div class="grid text-center content-center md:hidden lg:hidden">
+            <div>
+              <h4 class="text-white text-lg font-semibold mb-4">
+                Contact Us</h4>
+              <p>A108 Adam Street</p>
+              <p>New York, NY 535022</p>
+              <p>United States</p>
+              <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+              <p><strong>Email:</strong> <span class="text-[#12a16b]">info@infobank.com</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class=" mt-10 pt-6 pb-6 text-center text-sm text-gray-400 bg-[#0D1411] h-full 2xl:text-sm">
+      © 2025 <span class="text-[#12a16b] font-bold">ZarBank</span>. All Rights Reserved.
+    </div>
+  </footer>
+
+  <script>
+                // navbar position
+
+                const navbar = document.getElementById("navbar");
+
+                window.addEventListener("scroll", () => {
+                    if (window.scrollY > 50) {
+                        navbar.classList.add("bg-black/40", "backdrop-blur");
+                    } else {
+                        navbar.classList.remove("bg-black/40", "backdrop-blur");
+                    }
+                });
+
+                // Dropdown toggle (works for both desktop & mobile)
+                function toggleDropdown(menuId, iconId) {
+                    let menu = document.getElementById(menuId);
+                    let icon = document.getElementById(iconId);
+
+                    if (menu.classList.contains("hidden")) {
+                        menu.classList.remove("hidden");
+                        icon.style.transform = "rotate(90deg)";
+                    } else {
+                        menu.classList.add("hidden");
+                        icon.style.transform = "rotate(0deg)";
+                    }
+                }
+
+                // Mobile menu toggle
+                const menuBtn = document.getElementById("menuBtn");
+                const menuIcon = document.getElementById("menuIcon");
+                const closeIcon = document.getElementById("closeIcon");
+                const mobileMenu = document.getElementById("mobileMenu");
+
+menuBtn.addEventListener("click", () => {
+  mobileMenu.classList.toggle("hidden");
+
+  menuIcon.classList.toggle("opacity-0");
+  menuIcon.classList.toggle("rotate-90");
+
+  closeIcon.classList.toggle("opacity-0");
+  closeIcon.classList.toggle("rotate-0");
+});
+
+    // up down arrow
+    const scrollBtn = document.getElementById("scrollBtn");
+    const scrollIcon = document.getElementById("scrollIcon");
+
+    function scrollToPosition(target) {
+      const start = window.scrollY;
+      const distance = target - start;
+      const duration = 200; // ms
+      let startTime = null;
+
+      function animation(currentTime) {
+        if (!startTime) startTime = currentTime;
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        window.scrollTo(0, start + distance * progress);
+        if (progress < 1) requestAnimationFrame(animation);
+      }
+
+      requestAnimationFrame(animation);
+    }
+
+    function updateButton() {
+      const scrollTop = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight; // ✅ safe option
+      const clientHeight = window.innerHeight; // ✅ mobile safe
+
+      if (scrollTop + clientHeight >= scrollHeight - 5) {
+        // bottom reached → arrow up
+        scrollIcon.classList.remove("fa-arrow-down");
+        scrollIcon.classList.add("fa-arrow-up");
+        scrollBtn.onclick = () => scrollToPosition(0);
+      } else if (scrollTop <= 0) {
+        // top reached → arrow down
+        scrollIcon.classList.remove("fa-arrow-up");
+        scrollIcon.classList.add("fa-arrow-down");
+        scrollBtn.onclick = () => scrollToPosition(scrollHeight);
+      }
+    }
+
+    // 👇 mobile browsers ke liye scroll aur resize dono listen karo
+    window.addEventListener("scroll", updateButton);
+    window.addEventListener("resize", updateButton);
+    updateButton();
+
+    // User data fetch
+    let user = JSON.parse(localStorage.getItem("user"));
+    let miniDp = document.getElementById("miniDp");
+    let icon = document.getElementById("floatingUserIcon");
+
+    if (user && user.dp) {
+      miniDp.src = user.dp;
+    }
+
+    icon.addEventListener("click", function () {
+      if (user) {
+        if (user.loggedIn) {
+          window.location.href = "account.html";
+        } else {
+          window.location.href = "login.html";
+        }
+      } else {
+        window.location.href = "register.html";
+      }
+    });
+  </script>
+
+</body>
+
+</html>

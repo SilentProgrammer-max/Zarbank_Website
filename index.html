@@ -1,0 +1,2484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZarBank — Simple, Secure Banking</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/logo.PNG" class="h-5">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+</head>
+<style>
+    @keyframes slow-bounce {
+
+        0%,
+        100% {
+            transform: translateY(-10%);
+            animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+        }
+
+        50% {
+            transform: translateY(0);
+            animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+        }
+    }
+
+    .animate-bounce-slow {
+        animation: slow-bounce 2s infinite;
+    }
+
+    /* Default inactive dots */
+    [data-glide-el="controls[nav]"] button {
+        width: 12px;
+        height: 12px;
+        border-radius: 9999px;
+        /* fully round */
+        border: 1px solid #12a16b;
+        /* thin green border */
+        background-color: white;
+        /* center white */
+        margin: 0 4px;
+        transition: none !important;
+    }
+
+    /* Active dot (filled green) */
+    [data-glide-el="controls[nav]"] button.glide__bullet--active {
+        background-color: #12a16b;
+        border-color: #12a16b;
+    }
+</style>
+
+<body class="bg-white text-black transition-colors duration-500">
+    <!-- Background image -->
+    <div class="absolute inset-0 bg-cover bg-center h-265 sm:h-220 lg:h-200 2xl:h-240"
+        style="background-image: url('assets/banner.jpeg');">
+    </div>
+
+    <!-- Dark overlay -->
+    <div class="absolute inset-0 bg-black opacity-80 h-265 sm:h-220 lg:h-200 2xl:h-240"></div>
+
+    <!-- Navbar -->
+    <div id="navbar"
+        class="w-full py-3 flex items-center justify-between relative z-10 sm:justify-between lg:justify-between lg:px-10 2xl:px-10 sticky top-0 bg-transparent transition-all duration-300 mr-auto">
+        <!-- Left Logo -->
+        <div class="flex">
+            <img src="assets/logo.PNG" alt="ZarBank Logo" class="lg:h-14  h-14 ml-0 ">
+            <span class="text-3xl font-bold -ml-1 mt-2.5 text-[#12a16b]">Bank</span>
+        </div>
+
+
+        <!-- Hamburger Icon (Mobile) -->
+        <button id="menuBtn" class="sm:block md:block lg:hidden relative w-7 h-7 sm:ml-80 md:ml-96 ml-28">
+            <!-- Hamburger -->
+
+            <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                class="absolute top-0 left-0 w-7 h-7 text-white transition-all duration-[300ms] ease">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <!-- Cross -->
+            <svg id="closeIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                class="absolute top-0 left-0 w-7 h-7 text-white opacity-0 rotate-90 transition-all duration-[300ms] ease">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+
+        <!-- Desktop Menu -->
+        <nav class="hidden lg:block lg:m-auto lg:block ">
+            <ul class="flex gap-6 items-center text-white">
+
+                <li><a href="#home"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Home</a>
+                </li>
+                <li><a href="#about"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">About</a></li>
+
+
+
+                <!-- Services -->
+                <li class="relative">
+                    <a href="javascript:void(0)" onclick="toggleDropdown('servicesMenu','servicesIcon')"
+                        class="flex items-center gap-1 nav-link hover:text-[#12a16b] transition-all duration-[100ms] ease">
+                        Services
+                        <svg id="servicesIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </a>
+                    <ul id="servicesMenu" class="absolute -left-40 mt-2 hidden border border-gray-700 rounded-xl shadow-md p-5 w-[250px] space-y-2 hover:-translate-y-1 hover:shadow-2xl
+              focus-visible:-translate-y-1 focus-visible:shadow-2xl bg-white/1 backdrop-blur">
+                        <li><a href="#accountopening"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Account
+                                Opening</a></li>
+                        <li><a href="#savings"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Savings
+                                & Deposits</a></li>
+                        <li><a href="#creditcards"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Credit
+                                Cards</a>
+                        </li>
+                        <li><a href="#loans"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Loans &
+                                Financing</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Loans -->
+                <li class="relative">
+                    <a href="javascript:void(0)" onclick="toggleDropdown('loansMenu','loansIcon')"
+                        class="flex items-center gap-1 nav-link hover:text-[#12a16b] transition-all duration-[100ms] ease">
+                        Loans
+                        <svg id="loansIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </a>
+                    <ul id="loansMenu" class="absolute left-0 mt-2 hidden border border-gray-700 rounded-xl shadow-md p-5 w-[250px] space-y-2 hover:-translate-y-1 hover:shadow-2xl
+              focus-visible:-translate-y-1 focus-visible:shadow-2xl bg-white/1 backdrop-blur">
+                        <li><a href="#standard"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Standard</a>
+                        </li>
+                        <li><a href="#professional"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Professional</a>
+                        </li>
+                        <li><a href="#ultimate"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Ultimate</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#testimonials"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Reviews</a>
+                </li>
+                <li><a href="#team"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Team</a>
+                </li>
+                <li><a href="#contact"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Contact</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Desktop Button -->
+        <a href="register.html">
+            <button
+                class="hidden lg:block text-white bg-gradient-to-br from-[#14b87a] via-[#12a16b] to-[#0e8055] hover:bg-gradient-to-bl focus:ring-2 focus:outline-none focus:ring-[#12a16acb] dark:focus:ring-green-900 font-medium rounded-full py-2 px-5 text-center cursor-pointer whitespace-nowrap transition hover:translate-y-1 duration-[200ms]  shadow-[0_0_25px_#33997a6e]">Click
+                Now</button>
+        </a>
+    </div>
+
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu"
+        class="lg:hidden hidden px-4 py-4 border border-transparent z-100 relative flex flex-col bg-white/10 backdrop-blur text-white justify-between">
+        <div class="">
+            <ul class="space-y-3">
+
+                <li><a href="#home"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Home</a>
+                </li>
+                <li><a href="#about"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">About</a></li>
+
+                <!-- Services (Mobile Dropdown) -->
+                <li>
+                    <button onclick="toggleDropdown('servicesMenuMobile','servicesIconMobile')"
+                        class="flex items-center gap-1 w-full cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">
+                        Services
+                        <svg id="servicesIconMobile" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                    <ul id="servicesMenuMobile" class="hidden pl-4 mt-2 space-y-2">
+                        <li><a href="#accountopening"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Account
+                                Opening</a></li>
+                        <li><a href="#savings"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Savings
+                                & Deposits</a></li>
+                        <li><a href="#creditcards"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Credit
+                                Cards</a>
+                        </li>
+                        <li><a href="#loans"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Loans &
+                                Financing</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Loans (Mobile Dropdown) -->
+                <li>
+                    <button onclick="toggleDropdown('loansMenuMobile','loansIconMobile')"
+                        class="flex items-center gap-1 w-full cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">
+                        Loans
+                        <svg id="loansIconMobile" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                    <ul id="loansMenuMobile" class="hidden pl-4 mt-2 space-y-2">
+                        <li><a href="#standard"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Standard</a>
+                        </li>
+                        <li><a href="#professional"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Professional</a>
+                        </li>
+                        <li><a href="#ultimate"
+                                class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Ultimate</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#testimonials"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Reviews</a>
+                </li>
+                <li><a href="#team"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Team</a>
+                </li>
+                <li><a href="#contact"
+                        class="cursor-pointer hover:text-[#12a16b] transition-all duration-[200ms] ease">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <!-- Center Button (Mobile) -->
+        <div>
+            <a href="register.html">
+                <button type="button" class="text-white bg-gradient-to-r from-[#14b87a] via-[#12a16b] to-[#0e8055] hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-[#12a16acb] dark:focus:ring-green-900
+ font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 cursor-pointer whitespace-nowrap w-full mt-5"
+                    onclick="window.location.href='Loginform.html'">Click
+                    Now</button>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Scroll Button --> <button id="scrollBtn"
+        class="fixed bottom-6 left-6 w-12 h-12 flex items-center justify-center rounded-full bg-[#12a16b] text-white shadow-lg hover:bg-[#0e8c59] transform hover:-translate-y-1 transition duration-300 z-50">
+        <i id="scrollIcon" class="fa-solid fa-arrow-down"></i> </button>
+
+
+    <section id="home" class="relative h-screen flex items-center lg:px-6 lg:-top-5">
+
+
+        <!-- User Icon -->
+        <div id="floatingUserIcon"
+            class="fixed bottom-5 right-5 w-12 h-12 rounded-full overflow-hidden cursor-pointer z-50 shadow-lg border border-gray-300">
+            <img id="miniDp" src="assets/user.jpg" alt="User" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Content -->
+        <div class="relative z-10 container mx-auto px-6 lg:m-auto xl:m-auto 2xl:m-auto sm:m-auto md:m-auto mt-24">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+                <!-- Left Content -->
+                <div class="text-white lg:-mt-10 ">
+                    <span class="text-white font-semibold tetracking-wide bg-[#12a16b] rounded-full py-2.5 px-9">Welcome
+                        to ZarBank</span>
+                    <h1 class="text-4xl lg:text-5xl font-bold mt-3 leading-tight">
+                        Secure Banking for Your <span class="text-[#12a16b]">Future</span>
+                    </h1>
+                    <p class="mt-4 text-gray-200 text-lg">
+                        Experience safe, reliable, and innovative financial solutions.
+                        With ZarBank, your money grows with trust.
+                    </p>
+
+                    <!-- Buttons -->
+                    <div class="mt-6 lg:flex gap-4 grid sm:flex">
+                        <a href="login.html"
+                            class="text-white bg-gradient-to-br from-[#14b87a] via-[#12a16b] to-[#0e8055] hover:bg-gradient-to-bl focus:ring-2 focus:outline-none focus:ring-[#12a16acb] dark:focus:ring-green-900 font-medium rounded-lg text-xl py-4 text-center cursor-pointer whitespace-nowrap mt-9 w-50 transition hover:-translate-y-1 duration-[200ms]  shadow-[0_0_25px_#33997a6e]"
+                            onclick="openAccount()">
+                            Open Account
+                        </a>
+                        <a href="#about"
+                            class=" text-white px-6 py-3 sm:mt-9 rounded-lg border border-2 border-[#12a16b] hover:bg-[#67c2942d] transition hover:-translate-y-1 duration-[200ms] w-50 text-center text-xl">
+                            Learn More
+                        </a>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="mt-10 grid grid-cols-3 gap-6">
+                        <div>
+                            <span class="text-2xl font-bold text-[#12a16b]">1M+</span>
+                            <p class="text-gray-300">Happy Customers</p>
+                        </div>
+                        <div>
+                            <span class="text-2xl font-bold text-[#12a16b]">500+</span>
+                            <p class="text-gray-300">Branches</p>
+                        </div>
+                        <div>
+                            <span class="text-2xl font-bold text-[#12a16b]">24/7</span>
+                            <p class="text-gray-300">Customer Support</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side (Features Cards) -->
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="bg-white/5 backdrop-blur p-6 rounded-xl text-center text-white shadow-lg transition-all duration-300 ease-out
+              hover:-translate-y-1 hover:shadow-2xl
+              focus-visible:-translate-y-1 focus-visible:shadow-2xl border border-1 border-gray-700 cursor-pointer">
+                        <i class="fa-solid fa-shield-halved text-3xl text-[#12a16b]"></i>
+                        <p class="font-semibold">Secure Banking</p>
+                    </div>
+
+                    <div class="bg-white/5 backdrop-blur p-6 rounded-xl text-center text-white shadow-lg transition-all duration-300 ease-out
+              hover:-translate-y-1 hover:shadow-2xl
+              focus-visible:-translate-y-1 focus-visible:shadow-2xl border border-1 border-gray-700 cursor-pointer">
+                        <i class="fa-solid fa-coins text-3xl text-[#12a16b]"></i>
+                        <p class="mt-2 font-semibold">Smart Savings</p>
+                    </div>
+
+                    <div class="bg-white/5 backdrop-blur p-6 rounded-xl text-center text-white shadow-lg transition-all duration-300 ease-out
+              hover:-translate-y-1 hover:shadow-2xl
+              focus-visible:-translate-y-1 focus-visible:shadow-2xl border border-1 border-gray-700 cursor-pointer">
+                        <i class="fa-solid fa-phone text-3xl text-[#12a16b]"></i>
+                        <p class="mt-2 font-semibold">Mobile Banking</p>
+                    </div>
+
+                    <div class="bg-white/5 backdrop-blur p-6 rounded-xl text-center text-white shadow-lg transition-all duration-300 ease-out
+              hover:-translate-y-1 hover:shadow-2xl
+              focus-visible:-translate-y-1 focus-visible:shadow-2xl border border-1 border-gray-700 cursor-pointer">
+                        <i class="fa-solid fa-chart-line text-3xl text-[#12a16b]"></i>
+                        <p class="mt-2 font-semibold">Investment Growth</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section id="about" class="py-28 sm:py-10">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+                <!-- Left Content -->
+                <div class="space-y-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">
+                        Empowering Financial Growth Since 2015
+                    </h2>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        ZarBank is a trusted financial institution committed to providing secure, reliable, and
+                        innovative banking solutions for individuals and businesses across Pakistan.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        Our journey began with a clear mission: to make modern banking accessible, simple, and
+                        customer focused. Over the years, we have grown into a dependable partner for thousands of
+                        clients, offering services that support financial stability and growth.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        Through trust, transparency, and innovation, ZarBank continues to deliver value driven financial
+                        services from savings and investments to digital banking while building lasting
+                        relationships with our customers.
+                    </p>
+
+                    <!-- Stats -->
+                    <div
+                        class="grid md:grid-cols-3 gap-6 text-center grid-cols-1 border-y border-gray-200 w-full border-3">
+                        <div class="p-6 ">
+                            <div class="text-2xl font-bold text-[#12a16b]">8+</div>
+                            <div class="text-gray-500 text-sm">Years of Trusted Banking</div>
+                        </div>
+                        <div class="p-6 ">
+                            <div class="text-2xl font-bold text-[#12a16b]">25,000+</div>
+                            <div class="text-gray-500 text-sm">Satisfied Customers</div>
+                        </div>
+                        <div class="p-6 ">
+                            <div class="text-2xl font-bold text-[#12a16b]">50+</div>
+                            <div class="text-gray-500 text-sm">Dedicated Branches</div>
+                        </div>
+                    </div>
+
+
+                    <!-- CTA Buttons -->
+                    <div class="grid md:flex gap-4 pt-6 sm:flex">
+                        <a href="#testimonials"
+                            class="px-6 py-3 bg-[#13b477] text-white font-medium rounded-full hover:bg-[#15a16c] shadow transition hover:-translate-y-1 duration-[300ms] text-center">
+                            Check Our Work
+                        </a>
+                        <a href="#team"
+                            class="px-6 py-3 border border-[#12a16b] text-[#12a16b] font-medium rounded-full hover:bg-[#12a16b] hover:text-white text-center transition hover:-translate-y-1 duration-[300ms]">
+                            Meet Our Team
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Image + Floating Card -->
+                <div class="md:relative grid">
+                    <img src="assets/about.webp" alt="About Us" class="rounded-2xl shadow-lg w-full">
+
+                    <!-- Floating Cards -->
+                    <div class="relative mt-4 md:absolute md:-bottom-8 md:left-1/2 lg:left-48 xl:left-64 2xl:left-80 md:transform md:-translate-x-1/2 
+  grid md:grid-cols-1 gap-4 lg:grid-cols-1">
+
+                        <!-- Card 1 - Trophy -->
+                        <div
+                            class="bg-white shadow-2xl drop-shadow-xl border-2 border-gray-200 rounded-2xl p-5 lg:p-2 flex items-center gap-4 hover:-translate-y-2 transition-transform duration-300 lg:w-64 xl:w-96 ">
+                            <div class="p-3 rounded-full bg-blue-100 text-blue-600 text-2xl lg:text-xl">
+                                <i class="fa-solid fa-trophy"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-lg font-semibold text-[#12a16b] lg:text-[16px]">Best Bank Award</h5>
+                                <span class="text-sm text-gray-500">Excellence in Customer Service 2023</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 - Badge -->
+                        <div
+                            class="bg-white shadow-2xl drop-shadow-xl border-2 border-gray-200 rounded-2xl p-5 lg:p-2 flex items-center gap-4 hover:-translate-y-2 transition-transform duration-300 lg:w-64 xl:w-96">
+                            <div class="p-3 rounded-full bg-green-100 text-green-600 text-2xl lg:text-xl">
+                                <i class="fa-solid fa-medal"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-lg font-semibold text-[#12a16b]">Innovation Award</h5>
+                                <span class="text-sm text-gray-500">Digital Banking Excellence 2022</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 - Shield -->
+                        <div
+                            class="bg-white shadow-2xl drop-shadow-xl border-2 border-gray-200 rounded-2xl p-5 lg:p-4 flex items-center gap-4 hover:-translate-y-2 transition-transform duration-300 lg:w-64 xl:w-96">
+                            <div class="p-3 rounded-full bg-yellow-100 text-yellow-600 text-2xl lg:text-xl">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-lg font-semibold text-[#12a16b]">Trusted Brand</h5>
+                                <span class="text-sm text-gray-500">Most Reliable Bank 2021</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section class="">
+        <div class="container mx-auto px-6 lg:px-12 ">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-14">
+                Trusted By Leading Businesses
+            </h2>
+
+            <!-- Swiper -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+
+                    <!-- Client 1 -->
+                    <div
+                        class="swiper-slide flex justify-center items-center  filter grayscale hover:grayscale-0 transition-all duration-[300ms] ease cursor-pointer">
+                        <img src="assets/statebank.png" alt="State Bank" class="w-40 h-auto object-contain" />
+                    </div>
+
+                    <!-- Client 2 -->
+                    <div
+                        class="swiper-slide flex justify-center items-center  filter grayscale hover:grayscale-0 transition-all duration-[300ms] ease cursor-pointer">
+                        <img src="assets/HBL bank.png" alt="HBL" class="w-40 h-auto object-contain" />
+                    </div>
+
+                    <!-- Client 3 -->
+                    <div
+                        class="swiper-slide flex justify-center items-center  filter grayscale hover:grayscale-0 transition-all duration-[300ms] ease cursor-pointer">
+                        <img src="assets/UBL bank.svg" alt="UBL" class="w-40 h-auto object-contain" />
+                    </div>
+
+                    <!-- Client 4 -->
+                    <div
+                        class="swiper-slide flex justify-center items-center filter grayscale hover:grayscale-0 transition-all duration-[300ms] ease cursor-pointer">
+                        <img src="assets/Allied bank.png" alt="Allied Bank" class="w-40 h-auto object-contain" />
+                    </div>
+
+                    <!-- Client 1 -->
+                    <div
+                        class="swiper-slide flex justify-center items-center  filter grayscale hover:grayscale-0 transition-all duration-[300ms] ease cursor-pointer">
+                        <img src="assets/statebank.png" alt="State Bank" class="w-40 h-auto object-contain" />
+                    </div>
+
+                    <!-- Client 2 -->
+                    <div
+                        class="swiper-slide flex justify-center items-center  filter grayscale hover:grayscale-0 transition-all duration-[300ms] ease cursor-pointer">
+                        <img src="assets/HBL bank.png" alt="HBL" class="w-40 h-auto object-contain" />
+                    </div>
+
+                    <!-- Client 3 -->
+                    <div
+                        class="swiper-slide flex justify-center items-center  filter grayscale hover:grayscale-0 transition-all duration-[300ms] ease cursor-pointer">
+                        <img src="assets/UBL bank.svg" alt="UBL" class="w-40 h-auto object-contain" />
+                    </div>
+
+                    <!-- Client 4 -->
+                    <div
+                        class="swiper-slide flex justify-center items-center filter grayscale hover:grayscale-0 transition-all duration-[300ms] ease cursor-pointer">
+                        <img src="assets/Allied bank.png" alt="Allied Bank" class="w-40 h-auto object-contain" />
+                    </div>
+
+                    <!-- Client 1 -->
+                    <div
+                        class="swiper-slide flex justify-center items-center  filter grayscale hover:grayscale-0 transition-all duration-[300ms] ease cursor-pointer">
+                        <img src="assets/statebank.png" alt="State Bank" class="w-40 h-auto object-contain" />
+                    </div>
+
+                    <!-- Client 2 -->
+                    <div
+                        class="swiper-slide flex justify-center items-center  filter grayscale hover:grayscale-0 transition-all duration-[300ms] ease cursor-pointer">
+                        <img src="assets/HBL bank.png" alt="HBL" class="w-40 h-auto object-contain" />
+                    </div>
+
+                    <!-- Client 3 -->
+                    <div
+                        class="swiper-slide flex justify-center items-center  filter grayscale hover:grayscale-0 transition-all duration-[300ms] ease cursor-pointer">
+                        <img src="assets/UBL bank.svg" alt="UBL" class="w-40 h-auto object-contain" />
+                    </div>
+
+                    <!-- Client 4 -->
+                    <div
+                        class="swiper-slide flex justify-center items-center filter grayscale hover:grayscale-0 transition-all duration-[300ms] ease cursor-pointer">
+                        <img src="assets/Allied bank.png" alt="Allied Bank" class="w-40 h-auto object-contain" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Feature Services Session -->
+
+    <section id="featured-services" class="py-16 bg-[#F4F9F7]">
+        <!-- Section Title -->
+        <div class="container mx-auto text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 text-center">Featured Services</h2>
+
+            <div class="relative w-full mt-3 mb-5 h-[3px] flex justify-center items-center">
+                <!-- Gray full line -->
+                <div class="w-50 h-[1px] bg-gray-400"></div>
+                <!-- Center green line -->
+                <div class="w-18 h-[4px] absolute bg-[#12a16b] rounded-full"></div>
+            </div>
+
+            <p class="text-gray-500 mt-2">Featured Services</p>
+        </div>
+
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <!-- Left Content -->
+                <div>
+                    <span
+                        class="text-[#12a16b] py-2 px-3 rounded-xl font-semibold bg-[#1ad68e13] font-medium uppercase tracking-wide">Professional
+                        Services</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mt-3">
+                        Elevating Business Performance Through Strategic Solutions
+                    </h2>
+                    <p class="text-gray-600 mt-4">
+                        Our banking expertise ensures financial strategies that empower institutions.
+                        From risk management to digital innovation, we help banks scale securely and
+                        sustainably, driving long-term growth with proven solutions.
+                    </p>
+                    <div class="mt-6 flex gap-3">
+                        <a href="#"
+                            class="group inline-flex items-center gap-2 bg-[#12a16b] font-semibold text-white px-6 py-3 rounded-lg shadow-md hover:bg-[#119764] transition">
+
+                            <span>
+                                Request a Consultation
+                                <i
+                                    class="fa-solid fa-arrow-right transform transition-transform duration-300 group-hover:translate-x-1"></i>
+                            </span>
+
+                            <i
+                                class="bi bi-arrow-right transform transition-transform duration-300 group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Image -->
+                <div class="relative">
+                    <img src="assets/services.jpg" alt="Banking Services"
+                        class="rounded-xl shadow-lg w-full h-auto object-cover">
+                    <div class="absolute -top-6 -left-6 w-20 h-20 bg-[#12a16b]/10 rounded-full"></div>
+                    <div class="absolute -bottom-6 -right-6 w-28 h-28 bg-[#12a16b]/20 rounded-full"></div>
+                </div>
+            </div>
+
+            <!-- Services Slider -->
+            <div class="mt-16">
+                <div class="swiper mySwiperServices">
+                    <div class="swiper-wrapper">
+
+                        <!-- Service Card 1 -->
+                        <div class="swiper-slide">
+                            <div
+                                class="card relative bg-white rounded-xl shadow-md p-6 group transition-all duration-500 hover:bg-[#12a16b] hover:text-white overflow-hidden">
+
+                                <div class="text-[#12a16b] text-3xl mb-4 group-hover:text-white">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+
+                                <div class="content">
+                                    <h4 class="text-lg font-semibold text-gray-800 mb-2 group-hover:text-white">
+                                        <a href="#">Financial Strategy Development</a>
+                                    </h4>
+                                    <p class="text-gray-600 group-hover:text-white">
+                                        Strategic frameworks to strengthen banks’ financial planning and growth.
+                                    </p>
+                                </div>
+
+                                <!-- Number + Line -->
+                                <div class="relative mt-4 w-20 h-4 group">
+                                    <!-- Line -->
+                                    <span
+                                        class="absolute left-7 top-1/2 w-full h-[1px] bg-[#12a16b] -translate-y-1/2 transition-colors group-hover:-translate-x-3 duration-300 group-hover:bg-white"></span>
+
+                                    <!-- Number -->
+                                    <span
+                                        class="absolute left-0 top-5 text-[#12a16b] font-bold text-lg -translate-y-1/2 transition-transform duration-300 ease-in-out group-hover:translate-x-11 group-hover:text-white">
+                                        01
+                                    </span>
+                                </div>
+
+
+                                <!-- Arrow Button -->
+
+                                <a href="#home" class="arrow-btn absolute top-5 right-0 
+              bg-white text-[#12a16b] w-12 h-12 rounded-full flex items-center justify-center
+              opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 
+              transition-all duration-500 ease-out origin-top-right rotate-12 shadow-md">
+                                    <i class="fa-solid fa-arrow-up text-lg"></i>
+                                </a>
+
+                            </div>
+                        </div>
+
+
+                        <!-- Service Card 2 -->
+                        <div class="swiper-slide">
+                            <div
+                                class="card relative bg-white rounded-xl shadow-md p-6 group transition-all duration-500 hover:bg-[#12a16b] hover:text-white overflow-hidden">
+
+                                <div class="text-[#12a16b] text-3xl mb-4 group-hover:text-white">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                </div>
+
+                                <div class="content">
+                                    <h4 class="text-lg font-semibold text-gray-800 mb-2 group-hover:text-white">
+                                        <a href="#">Market Expansion Advisory</a>
+                                    </h4>
+                                    <p class="text-gray-600 group-hover:text-white">
+                                        Helping banks identify and enter new profitable markets effectively.
+                                    </p>
+                                </div>
+
+                                <!-- Number + Line -->
+                                <div class="relative mt-4 w-20 h-4 group">
+                                    <!-- Line -->
+                                    <span
+                                        class="absolute left-7 top-1/2 w-full h-[1px] bg-[#12a16b] -translate-y-1/2 transition-colors group-hover:-translate-x-3 duration-300 group-hover:bg-white"></span>
+
+                                    <!-- Number -->
+                                    <span
+                                        class="absolute left-0 top-5 text-[#12a16b] font-bold text-lg -translate-y-1/2 transition-transform duration-300 ease-in-out group-hover:translate-x-11 group-hover:text-white">
+                                        02
+                                    </span>
+                                </div>
+
+
+                                <!-- Arrow Button -->
+
+                                <a href="#home" class="arrow-btn absolute top-5 right-0 
+              bg-white text-[#12a16b] w-12 h-12 rounded-full flex items-center justify-center
+              opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 
+              transition-all duration-500 ease-out origin-top-right rotate-12 shadow-md">
+                                    <i class="fa-solid fa-arrow-up text-lg"></i>
+                                </a>
+
+                            </div>
+                        </div>
+
+
+                        <!-- Service Card 3-->
+                        <div class="swiper-slide">
+                            <div
+                                class="card relative bg-white rounded-xl shadow-md p-6 group transition-all duration-500 hover:bg-[#12a16b] hover:text-white overflow-hidden">
+
+                                <div class="text-[#12a16b] text-3xl mb-4 group-hover:text-white">
+                                    <i class="fa-solid fa-user-shield"></i>
+                                </div>
+
+                                <div class="content">
+                                    <h4 class="text-lg font-semibold text-gray-800 mb-2 group-hover:text-white">
+                                        <a href="#">Risk Management Solutions</a>
+                                    </h4>
+                                    <p class="text-gray-600 group-hover:text-white">
+                                        Customized frameworks to minimize risk exposure in financial operations.
+                                    </p>
+                                </div>
+
+                                <!-- Number + Line -->
+                                <div class="relative mt-4 w-20 h-4 group">
+                                    <!-- Line -->
+                                    <span
+                                        class="absolute left-7 top-1/2 w-full h-[1px] bg-[#12a16b] -translate-y-1/2 transition-colors group-hover:-translate-x-3 duration-300 group-hover:bg-white"></span>
+
+                                    <!-- Number -->
+                                    <span
+                                        class="absolute left-0 top-5 text-[#12a16b] font-bold text-lg -translate-y-1/2 transition-transform duration-300 ease-in-out group-hover:translate-x-11 group-hover:text-white">
+                                        03
+                                    </span>
+                                </div>
+
+
+                                <!-- Arrow Button -->
+
+                                <a href="#home" class="arrow-btn absolute top-5 right-0 
+              bg-white text-[#12a16b] w-12 h-12 rounded-full flex items-center justify-center
+              opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 
+              transition-all duration-500 ease-out origin-top-right rotate-12 shadow-md">
+                                    <i class="fa-solid fa-arrow-up text-lg"></i>
+                                </a>
+
+                            </div>
+                        </div>
+
+
+                        <!-- Service Card 4-->
+                        <div class="swiper-slide">
+                            <div
+                                class="card relative bg-white rounded-xl shadow-md p-6 group transition-all duration-500 hover:bg-[#12a16b] hover:text-white overflow-hidden">
+
+                                <div class="text-[#12a16b] text-3xl mb-4 group-hover:text-white">
+                                    <i class="fa-solid fa-lightbulb"></i>
+                                </div>
+
+                                <div class="content">
+                                    <h4 class="text-lg font-semibold text-gray-800 mb-2 group-hover:text-white">
+                                        <a href="#">Innovation &amp; Digital Transformation</a>
+                                    </h4>
+                                    <p class="text-gray-600 group-hover:text-white">
+                                        Driving digital banking adoption with secure, future-ready solutions.
+                                    </p>
+                                </div>
+
+                                <!-- Number + Line -->
+                                <div class="relative mt-4 w-20 h-4 group">
+                                    <!-- Line -->
+                                    <span
+                                        class="absolute left-7 top-1/2 w-full h-[1px] bg-[#12a16b] -translate-y-1/2 transition-colors group-hover:-translate-x-3 duration-300 group-hover:bg-white"></span>
+
+                                    <!-- Number -->
+                                    <span
+                                        class="absolute left-0 top-5 text-[#12a16b] font-bold text-lg -translate-y-1/2 transition-transform duration-300 ease-in-out group-hover:translate-x-11 group-hover:text-white">
+                                        04
+                                    </span>
+                                </div>
+
+
+                                <!-- Arrow Button -->
+
+                                <a href="#home" class="arrow-btn absolute top-5 right-0 
+              bg-white text-[#12a16b] w-12 h-12 rounded-full flex items-center justify-center
+              opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 
+              transition-all duration-500 ease-out origin-top-right rotate-12 shadow-md">
+                                    <i class="fa-solid fa-arrow-up text-lg"></i>
+                                </a>
+
+                            </div>
+                        </div>
+
+
+                        <!-- Service Card 5-->
+                        <div class="swiper-slide">
+                            <div
+                                class="card relative bg-white rounded-xl shadow-md p-6 group transition-all duration-500 hover:bg-[#12a16b] hover:text-white overflow-hidden">
+
+                                <div class="text-[#12a16b] text-3xl mb-4 group-hover:text-white">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+
+                                <div class="content">
+                                    <h4 class="text-lg font-semibold text-gray-800 mb-2 group-hover:text-white">
+                                        <a href="#">Talent Management Strategy</a>
+                                    </h4>
+                                    <p class="text-gray-600 group-hover:text-white">
+                                        Strengthening banking teams through leadership and talent programs.
+                                    </p>
+                                </div>
+
+                                <!-- Number + Line -->
+                                <div class="relative mt-4 w-20 h-4 group">
+                                    <!-- Line -->
+                                    <span
+                                        class="absolute left-7 top-1/2 w-full h-[1px] bg-[#12a16b] -translate-y-1/2 transition-colors group-hover:-translate-x-3 duration-300 group-hover:bg-white"></span>
+
+                                    <!-- Number -->
+                                    <span
+                                        class="absolute left-0 top-5 text-[#12a16b] font-bold text-lg -translate-y-1/2 transition-transform duration-300 ease-in-out group-hover:translate-x-11 group-hover:text-white">
+                                        05
+                                    </span>
+                                </div>
+
+
+                                <!-- Arrow Button -->
+
+                                <a href="#home" class="arrow-btn absolute top-5 right-0 
+              bg-white text-[#12a16b] w-12 h-12 rounded-full flex items-center justify-center
+              opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 
+              transition-all duration-500 ease-out origin-top-right rotate-12 shadow-md">
+                                    <i class="fa-solid fa-arrow-up text-lg"></i>
+                                </a>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="flex justify-center gap-4 mt-6">
+                        <button
+                            class="swiper-services-prev bg-[#12a16b] text-white px-6 py-4 rounded-full hover:bg-[#0e8055] transition">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <button
+                            class="swiper-services-next bg-[#12a16b] text-white px-6 py-4  rounded-full hover:bg-[#0e8055] transition">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="bank-process" class="py-20 md:py-24 bg-gray-50">
+        <!-- Section Title -->
+        <div class="container mx-auto text-center mb-12 px-3 sm:px-6 md:px-10">
+            <h2 class="text-3xl font-bold text-gray-800">How Bank Works</h2>
+            <div class="relative w-full mt-3 mb-5 h-[3px] flex justify-center items-center">
+                <!-- Gray full line -->
+                <div class="w-50 h-[1px] bg-gray-400"></div>
+                <!-- Center green line -->
+                <div class="w-18 h-[4px] absolute bg-[#12a16b] rounded-full"></div>
+            </div>
+            <p class="text-gray-600 mt-2">Step by step guide of modern banking process</p>
+        </div>
+
+        <div class="container mx-auto px-3 sm:px-6 md:px-10 grid gap-8 md:grid-cols-2 xl:grid-cols-4">
+
+            <!-- Step 1 -->
+            <div
+                class="relative bg-white rounded-2xl shadow-md p-6 sm:px-10 text-center group transition-all duration-500 ease hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)] hover:border hover:border-[#12a16b] xl:px-6 xl:p-6 2xl:px-6 2xl:py-14">
+                <!-- Icon Circle -->
+                <div
+                    class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#1ec58521] text-[#12a16b] text-3xl mb-4 2xl:mb-5 transition-all duration-500 ease-in-out group-hover:bg-[#12a16b] group-hover:text-white group-hover:h-[85px] group-hover:w-[85px] group-hover:-translate-y-1">
+                    <i class="fa-solid fa-id-card"></i>
+                </div>
+                <!-- Step Label -->
+                <div
+                    class="inline-block w-fit text-sm font-semibold text-white rounded-full text-center px-6 py-1 bg-[#12a16b] mx-auto mb-2 2xl:mb-5">
+                    Step 1
+                </div>
+                <!-- Title -->
+                <h3 class="text-lg font-bold text-gray-800 mt-1 2xl:text-xl">Account Registration</h3>
+                <!-- Description -->
+                <p class="text-gray-600 text-sm mt-2 2xl:text-lg 2xl:mt-5">
+                    Submit your CNIC with personal details and complete the KYC process for registration.
+                </p>
+                <!-- Arrow -->
+                <a href="#home" class="absolute right-[-20px] top-1/2 transform -translate-y-1/2 hidden md:block group">
+                    <div
+                        class="bg-[#12a16b] text-white w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-500 ease-in-out group-hover:translate-x-[2px] text-sm">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Step 2 -->
+            <div
+                class="relative bg-white rounded-2xl shadow-md p-6 sm:px-10 text-center group transition-all duration-500 ease hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)] hover:border hover:border-[#12a16b] xl:px-6 xl:p-6 2xl:px-6 2xl:py-14">
+                <div
+                    class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#1ec58521] text-[#12a16b] text-3xl mb-4 2xl:mb-5 transition-all duration-500 ease-in-out group-hover:bg-[#12a16b] group-hover:text-white group-hover:h-[85px] group-hover:w-[85px] group-hover:-translate-y-1">
+                    <i class="fa-solid fa-credit-card"></i>
+                </div>
+                <div
+                    class="inline-block w-fit text-sm font-semibold text-white rounded-full text-center px-6 py-1 bg-[#12a16b] mx-auto mb-2 2xl:mb-5">
+                    Step 2
+                </div>
+                <h3 class="text-lg font-bold text-gray-800 mt-1 2xl:text-xl">Card Issuance</h3>
+                <p class="text-gray-600 text-sm mt-2 2xl:text-lg 2xl:mt-5">
+                    Receive your debit or credit card along with secure PIN for digital and cash transactions.
+                </p>
+                <a href="#home"
+                    class="absolute right-[-20px] top-1/2 transform -translate-y-1/2 hidden md:block group md:hidden xl:block">
+                    <div
+                        class="bg-[#12a16b] text-white w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-500 ease-in-out group-hover:translate-x-[2px] text-sm">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Step 3 -->
+            <div
+                class="relative bg-white rounded-2xl shadow-md p-6 sm:px-10 text-center group transition-all duration-500 ease hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)] hover:border hover:border-[#12a16b] xl:px-6 xl:p-6 2xl:px-6 2xl:py-14">
+                <div
+                    class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#1ec58521] text-[#12a16b] text-3xl mb-4 2xl:mb-5 transition-all duration-500 ease-in-out group-hover:bg-[#12a16b] group-hover:text-white group-hover:h-[85px] group-hover:w-[85px] group-hover:-translate-y-1">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <div
+                    class="inline-block w-fit text-sm font-semibold text-white rounded-full text-center px-6 py-1 bg-[#12a16b] mx-auto mb-2 2xl:mb-5">
+                    Step 3
+                </div>
+                <h3 class="text-lg font-bold text-gray-800 mt-1 2xl:text-xl">Financial Services</h3>
+                <p class="text-gray-600 text-sm mt-2 2xl:text-lg 2xl:mt-5">
+                    Access deposits, online transfers, bill payments, and mobile banking applications.
+                </p>
+                <a href="#home" class="absolute right-[-20px] top-1/2 transform -translate-y-1/2 hidden md:block group">
+                    <div
+                        class="bg-[#12a16b] text-white w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-500 ease-in-out group-hover:translate-x-[2px] text-sm">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Step 4 -->
+            <div
+                class="relative bg-white rounded-2xl shadow-md p-6 sm:px-10 text-center group overflow-hidden transition-all duration-500 ease hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)] hover:border hover:border-[#12a16b] xl:px-6 xl:p-6 2xl:px-6 2xl:py-14">
+                <div
+                    class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#1ec58521] text-[#12a16b] text-3xl mb-4 2xl:mb-5 transition-all duration-500 ease-in-out group-hover:bg-[#12a16b] group-hover:text-white group-hover:h-[85px] group-hover:-translate-y-1">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <div
+                    class="inline-block w-fit text-sm font-semibold text-white rounded-full text-center px-6 py-1 bg-[#12a16b] mx-auto mb-2 2xl:mb-5">
+                    Step 4
+                </div>
+                <h3 class="text-lg font-bold text-gray-800 mt-1 2xl:text-xl">Customer Care</h3>
+                <p class="text-gray-600 text-sm mt-2 2xl:text-lg 2xl:mt-5 transition-none">
+                    Get real-time assistance through phone, chat, or branch visits anytime you need support.
+                </p>
+            </div>
+
+
+        </div>
+    </section>
+
+
+
+    <section id="features" class="features section py-16">
+
+        <div class="container mx-auto px-4">
+
+            <div class="flex flex-col lg:flex-row gap-8">
+
+                <!-- Tabs Navigation -->
+                <div class="lg:w-[400px]">
+                    <ul class="flex flex-col gap-2 sm:pl-10 md:pl-14 lg:pl-5 2xl:-ml-6">
+
+                        <!-- Tab 1 -->
+                        <li>
+                            <button
+                                class="tab-button flex items-center p-4 bg-white rounded-xl transition-all duration-300 hover:-translate-y-1 group active:bg-[#12cc852c] text-left"
+                                data-tab="tab-1">
+                                <!-- Icon Box -->
+                                <div
+                                    class="icon-box text-[#12a16b] bg-[#1fbb7f21] text-2xl p-2.5 rounded-xl mr-4 transition-all duration-300 group-hover:bg-[#329262] group-hover:text-white">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                </div>
+                                <!-- Text -->
+                                <div>
+                                    <h4
+                                        class="font-semibold text-gray-800 transition-colors duration-300 group-hover:text-[#12a16b] ">
+                                        Account Opening</h4>
+                                    <p class="text-gray-500 text-sm transition-colors duration-300 ">Open accounts
+                                        easily.</p>
+                                </div>
+                            </button>
+                        </li>
+
+                        <!-- Tab 2 -->
+                        <li>
+                            <button
+                                class="tab-button flex items-center p-4 bg-white rounded-xl transition-all duration-300 hover:-translate-y-1 group active:bg-[#12cc852c] text-left"
+                                data-tab="tab-1">
+                                <!-- Icon Box -->
+                                <div
+                                    class="icon-box text-[#12a16b] bg-[#1fbb7f21] text-2xl p-2.5 rounded-xl mr-4 transition-all duration-300 group-hover:bg-[#329262] group-hover:text-white">
+                                    <i class="fa-solid fa-piggy-bank"></i>
+                                </div>
+                                <!-- Text -->
+                                <div>
+                                    <h4
+                                        class="font-semibold text-gray-800 transition-colors duration-300 group-hover:text-[#12a16b] ">
+                                        Savings & Deposits</h4>
+                                    <p class="text-gray-500 text-sm transition-colors duration-300 ">Secure your money
+                                        and earn interest.</p>
+                                </div>
+                            </button>
+                        </li>
+
+                        <!-- Tab 3 -->
+                        <li>
+                            <button
+                                class="tab-button flex items-center p-4 bg-white rounded-xl transition-all duration-300 hover:-translate-y-1 group active:bg-[#12cc852c] text-left"
+                                data-tab="tab-1">
+                                <!-- Icon Box -->
+                                <div
+                                    class="icon-box text-[#12a16b] bg-[#1fbb7f21] text-2xl p-2.5 rounded-xl mr-4 transition-all duration-300 group-hover:bg-[#329262] group-hover:text-white">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                </div>
+                                <!-- Text -->
+                                <div>
+                                    <h4
+                                        class="font-semibold text-gray-800 transition-colors duration-300 group-hover:text-[#12a16b] ">
+                                        Loans & Credit</h4>
+                                    <p class="text-gray-500 text-sm transition-colors duration-300 ">Apply for loans
+                                        easily.</p>
+                                </div>
+                            </button>
+                        </li>
+
+                        <!-- Tab 4 -->
+                        <li>
+                            <button
+                                class="tab-button flex items-center p-4 bg-white rounded-xl transition-all duration-300 hover:-translate-y-1 group active:bg-[#12cc852c] text-left"
+                                data-tab="tab-1">
+                                <!-- Icon Box -->
+                                <div
+                                    class="icon-box text-[#12a16b] bg-[#1fbb7f21] text-2xl p-2.5 rounded-xl mr-4 transition-all duration-300 group-hover:bg-[#329262] group-hover:text-white">
+                                    <i class="fa-solid fa-money-check-dollar"></i>
+                                </div>
+                                <!-- Text -->
+                                <div>
+                                    <h4
+                                        class="font-semibold text-gray-800 transition-colors duration-300 group-hover:text-[#12a16b] ">
+                                        Online Banking</h4>
+                                    <p class="text-gray-500 text-sm transition-colors duration-300 ">Manage accounts and
+                                        pay bills online.</p>
+                                </div>
+                            </button>
+                        </li>
+
+                        <!-- Tab 5 -->
+                        <li>
+                            <button
+                                class="tab-button flex items-center p-4 bg-white rounded-xl transition-all duration-300 hover:-translate-y-1 group active:bg-[#12cc852c] text-left"
+                                data-tab="tab-1">
+                                <!-- Icon Box -->
+                                <div
+                                    class="icon-box text-[#12a16b] bg-[#1fbb7f21] text-2xl p-2.5 rounded-xl mr-4 transition-all duration-300 group-hover:bg-[#329262] group-hover:text-white">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                </div>
+                                <!-- Text -->
+                                <div>
+                                    <h4
+                                        class="font-semibold text-gray-800 transition-colors duration-300 group-hover:text-[#12a16b] ">
+                                        Investment Advisory</h4>
+                                    <p class="text-gray-500 text-sm transition-colors duration-300 ">Grow your wealth
+                                        with smart investments.</p>
+                                </div>
+                            </button>
+                        </li>
+                </div>
+
+                <!-- Tabs Content -->
+                <div class="lg:w-2/3">
+                    <div class="space-y-20 2xl:-mr-20">
+
+                        <!-- Tab 1 Content -->
+                        <div class="tab-panel sm:px-10 lg:px-0 sm:pt-6" id="tab-1">
+                            <div
+                                class="flex flex-col lg:flex-row gap-6 items-center bg-[#FFFFFF] lg:drop-shadow-xl lg:shadow-[#F9F9F9] lg:p-5 lg:rounded-2xl">
+                                <div class="lg:w-1/2">
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Account Opening Process</h3>
+                                    <div class="bg-[#12a16b] w-15 h-[3px] rounded-full mb-3"></div>
+                                    <p class="text-gray-600 mb-2">Provide your CNIC and required documents. Fill out the
+                                        form and start your bank account hassle-free.</p>
+                                    <p class="text-gray-600 mb-2 bg-[#12cc8515] p-5 mr-2 rounded-xl">Ensure you choose
+                                        the right account type, review terms, and get your debit card issued promptly.
+                                    </p>
+                                    <ul class="space-y-2">
+                                        <li
+                                            class="flex items-center gap-2 text-gray-600 transition-all duration-[200ms] ease-in hover:translate-x-1 hover:text-black">
+                                            <i class="fa-solid fa-circle-check text-[#12a16b]"></i> Submit valid CNIC
+                                        </li>
+                                        <li
+                                            class="flex items-center gap-2 text-gray-600 transition-all duration-[200ms] ease-in hover:translate-x-1 hover:text-black">
+                                            <i class="fa-solid fa-circle-check text-[#12a16b]"></i> Fill bank
+                                            application form
+                                        </li>
+                                        <li
+                                            class="flex items-center gap-2 text-gray-600 transition-all duration-[200ms] ease-in hover:translate-x-1 hover:text-black">
+                                            <i class="fa-solid fa-circle-check text-[#12a16b]"></i> Initial deposit if
+                                            required
+                                        </li>
+                                        <li
+                                            class="flex items-center gap-2 text-gray-600 transition-all duration-[200ms] ease-in hover:translate-x-1 hover:text-black">
+                                            <i class="fa-solid fa-circle-check text-[#12a16b]"></i> Account activation
+                                            confirmation
+                                        </li>
+                                    </ul>
+
+                                </div>
+                                <div class="lg:w-1/2 overflow-hidden rounded-xl cursor-pointer group">
+                                    <img src="assets/account opening.webp" alt="Account Opening" class="w-full h-full object-cover transition-transform duration-600 ease-in-out
+              group-hover:scale-105">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    </section>
+
+
+    <section id="services" class="services section bg-gray-50 py-16">
+
+        <!-- Section Title -->
+        <div class="container mx-auto text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Services</h2>
+            <div class="relative w-full mt-3 mb-5 h-[3px] flex justify-center items-center">
+                <!-- Gray full line -->
+                <div class="w-50 h-[1px] bg-gray-400"></div>
+                <!-- Center green line -->
+                <div class="w-18 h-[4px] absolute bg-[#12a16b] rounded-full"></div>
+            </div>
+            <p class="text-gray-600 uppercase tracking-wider">CHECK OUR BANK SERVICES</p>
+        </div>
+
+        <div class="container mx-auto grid lg:grid-cols-2 gap-8 px-1 sm:px-10 xl:px-20">
+
+            <!-- Service Card 1 -->
+            <div id="accountopening"
+                class="bg-white rounded-2xl p-6 relative group transition-all duration-500 border-[#12a16b] border-2 hover:shadow-2xl shadow-emerald-300">
+                <div class="text-white text-4xl mb-4 p-4 rounded-xl bg-[#12a16b] inline-block shadow-2xl shadow-emerald-300 
+              transform transition-transform duration-500 group-hover:scale-105 group-hover:rotate-6">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <h3 class="text-xl text-gray-800 mb-2 font-bold">Account Opening</h3>
+                <p class="text-gray-600 mb-4">
+                    Provide your CNIC and documents to open a new bank account hassle-free with proper verification.
+                </p>
+                <div class="flex justify-between items-center">
+                    <span class="bg-[#12a16b] text-white rounded-full px-3 font-semibold text-sm">Most Popular</span>
+                    <span class="text-[#12a16b] font-semibold">Starting at PKR 5,000</span>
+                </div>
+                <a href="details.html">
+                    <button class="bg-[#12a16b] px-5 py-3 rounded-full text-white text-sm 
+  shadow-2xl shadow-emerald-300 mt-4 transform transition-transform duration-500 
+  group-hover:translate-x-1 group-hover:bg-[#3C9862]">
+                        Get Started <li class="fa-solid fa-arrow-right text-white text-xs ml-2"></li>
+                    </button>
+                </a>
+            </div>
+
+            <!-- Service Card 2 -->
+            <div id="savings"
+                class="bg-white rounded-2xl shadow-lg p-6 relative group hover:-translate-y-2 transition-all duration-500 hover:shadow-emerald-100 hover:shadow-2xl overflow-hidden">
+
+                <!-- Circle (hidden by default, only shows on hover) -->
+                <div
+                    class="absolute -top-16 -right-16 w-32 h-32 bg-[#ECF6F1] rounded-full opacity-0 group-hover:opacity-100 group-hover:-top-8 group-hover:-right-8 transition-all duration-700 ease-out">
+                </div>
+
+                <div class="text-white text-4xl mb-4 p-4 rounded-xl bg-[#12a16b] inline-block shadow-2xl shadow-emerald-300 
+      transform transition-transform duration-500 group-hover:scale-105 group-hover:rotate-6 relative z-10">
+                    <i class="fa-solid fa-piggy-bank"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2 group-hover:text-black relative z-10">Savings &
+                    Deposits</h3>
+                <p class="text-gray-600 mb-4 relative z-10">
+                    Open savings accounts or fixed deposits to grow your wealth securely with attractive interest rates.
+                </p>
+                <div class="flex justify-between items-center relative z-10">
+                    <span class="text-[#12a16b] font-semibold">Starting at PKR 10,000</span>
+                </div>
+                <a href="details.html">
+                    <button class="bg-[#12a16b] px-5 py-3 rounded-full text-white text-sm shadow-2xl shadow-emerald-300 mt-4 
+     transform transition-transform duration-500 group-hover:translate-x-1 group-hover:bg-[#3C9862] relative z-10">
+                        Learn More<li class="fa-solid fa-arrow-right text-white text-xs ml-2"></li>
+                    </button>
+                </a>
+            </div>
+
+
+            <!-- Service Card 3 -->
+            <div id="creditcards"
+                class="bg-white rounded-2xl shadow-lg p-6 relative group hover:-translate-y-2 transition-all duration-500 hover:shadow-emerald-100 hover:shadow-2xl overflow-hidden">
+
+                <!-- Circle (hidden by default, only shows on hover) -->
+                <div
+                    class="absolute -top-16 -right-16 w-32 h-32 bg-[#ECF6F1] rounded-full opacity-0 group-hover:opacity-100 group-hover:-top-8 group-hover:-right-8 transition-all duration-700 ease-out">
+                </div>
+
+                <div class="text-white text-4xl mb-4 p-4 rounded-xl bg-[#12a16b] inline-block shadow-2xl shadow-emerald-300 
+      transform transition-transform duration-500 group-hover:scale-105 group-hover:rotate-6 relative z-10">
+                    <i class="fa-solid fa-credit-card"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2 group-hover:text-black relative z-10">Credit Cards
+                </h3>
+                <p class="text-gray-600 mb-4 relative z-10">
+                    Apply for bank credit cards easily with fast approval and secure transactions for online and offline
+                    use.
+                </p>
+                <div class="flex justify-between items-center relative z-10">
+                    <span class="text-[#12a16b] font-semibold">Starting at PKR 1,500/yr</span>
+                </div>
+                <a href="details.html">
+                    <button class="bg-[#12a16b] px-5 py-3 rounded-full text-white text-sm shadow-2xl shadow-emerald-300 mt-4 
+     transform transition-transform duration-500 group-hover:translate-x-1 group-hover:bg-[#3C9862] relative z-10">
+                        Explore<li class="fa-solid fa-arrow-right text-white text-xs ml-2"></li>
+                    </button>
+                </a>
+            </div>
+
+
+            <!-- Service Card 4 -->
+            <div id="loans"
+                class="bg-white rounded-2xl shadow-lg p-6 relative group hover:-translate-y-2 transition-all duration-500 hover:shadow-emerald-100 hover:shadow-2xl overflow-hidden">
+
+                <!-- Circle (hidden by default, only shows on hover) -->
+                <div
+                    class="absolute -top-16 -right-16 w-32 h-32 bg-[#ECF6F1] rounded-full opacity-0 group-hover:opacity-100 group-hover:-top-8 group-hover:-right-8 transition-all duration-700 ease-out">
+                </div>
+
+                <div class="text-white text-4xl mb-4 p-4 rounded-xl bg-[#12a16b] inline-block shadow-2xl shadow-emerald-300 
+      transform transition-transform duration-500 group-hover:scale-105 group-hover:rotate-6 relative z-10">
+                    <i class="fa-solid fa-university"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2 group-hover:text-black relative z-10">Loans &
+                    Financing</h3>
+                <p class="text-gray-600 mb-4 relative z-10">
+                    Personal and business loans with flexible repayment plans to meet your financial needs efficiently.
+                </p>
+                <div class="flex justify-between items-center relative z-10">
+                    <span class="text-[#12a16b] font-semibold">Starting at PKR 50,000</span>
+                </div>
+                <a href="details.html">
+                    <button class="bg-[#12a16b] px-5 py-3 rounded-full text-white text-sm shadow-2xl shadow-emerald-300 mt-4 
+     transform transition-transform duration-500 group-hover:translate-x-1 group-hover:bg-[#3C9862] relative z-10">
+                        Discover<li class="fa-solid fa-arrow-right text-white text-xs ml-2"></li>
+                    </button>
+                </a>
+            </div>
+
+
+        </div>
+
+        <!-- Stats Highlight -->
+        <div class="px-2 sm:mx-8 xl:px-12">
+            <div class="container mx-auto grid lg:grid-cols-4 gap-8 mt-16 text-center bg-[#12A16B] rounded-3xl py-3">
+                <div class=" rounded-xl p-1">
+                    <div class="text-3xl font-bold text-white mb-2">500+</div>
+                    <div class="text-white">Accounts Opened</div>
+                </div>
+                <div class=" rounded-xl p-1">
+                    <div class="text-3xl font-bold text-white mb-2">98%</div>
+                    <div class="text-white">Customer Satisfaction</div>
+                </div>
+                <div class=" rounded-xl p-1">
+                    <div class="text-3xl font-bold text-white mb-2">24/7</div>
+                    <div class="text-white">Support Available</div>
+                </div>
+                <div class=" rounded-xl p-1">
+                    <div class="text-3xl font-bold text-white mb-2">10+</div>
+                    <div class="text-white">Years Experience</div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="loan-plans" class="pt-16 bg-white">
+        <!-- Section Title -->
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-800">Loan Plans</h2>
+            <div class="relative w-full mt-3 mb-5 h-[3px] flex justify-center items-center">
+                <!-- Gray full line -->
+                <div class="w-50 h-[1px] bg-gray-400"></div>
+                <!-- Center green line -->
+                <div class="w-18 h-[4px] absolute bg-[#12a16b] rounded-full"></div>
+            </div>
+            <p class="text-gray-600 mt-2">Choose the best loan plan that suits your needs</p>
+        </div>
+
+        <div class="container mx-auto grid gap-8 md:grid-cols-1 px-4 sm:px-20 lg:grid-cols-3 lg:px-4 lg:gap-0.5">
+
+
+            <!-- Standard Loan Plan -->
+            <div id="standard"
+                class="bg-white rounded-2xl lg:p-5 p-5 2xl:py-10 2xl:px-20 relative group transition-all duration-500 text-center hover:-translate-y-1 sm:px-16 md:mx-16 lg:mx-0">
+                <!-- Icon -->
+                <div class="text-[#12a16b] text-2xl mb-10 p-4 rounded-xl bg-[#E7F5F0] inline-block shadow-md">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <!-- Title -->
+                <h3 class="text-3xl lg:text-2xl text-gray-800 font-semibold mb-8">Standard</h3>
+                <!-- Price -->
+                <div class="lg:text-2xl text-xl font-bold text-[#12a16b] mb-8">
+                    PKR 50,000 <span class="text-xl lg:text-[18px] text-gray-500">/month</span>
+                </div>
+                <!-- Description -->
+                <p class="text-gray-600 mb-12 max-w-md mx-auto">
+                    Get a personal loan quickly with minimal documentation and flexible repayment.
+                </p>
+                <!-- Points -->
+                <ul class="space-y-4 mb-10 text-gray-600 text-left">
+                    <li class="flex items-center gap-2 mb-6"><i class="fa-solid fa-check text-[#12a16b]"></i>Easy
+                        approval process</li>
+                    <li class="flex items-center gap-2 mb-8"><i class="fa-solid fa-check text-[#12a16b]"></i>Flexible
+                        repayment schedule</li>
+                    <li class="flex items-center gap-2 "><i class="fa-solid fa-check text-[#12a16b]"></i>Low interest
+                        rates</li>
+                </ul>
+                <!-- Button -->
+                <div class="flex justify-center">
+                    <a href="payment.html">
+                        <button
+                            class="bg-[#E7F5F0] text-[#12a16b] px-5 py-2.5 rounded-full text-sm flex items-center gap-2 transition-all duration-300 ease-in group hover:bg-[#12a16b] hover:text-[#E7F5F0]">
+                            Apply Now
+                            <i
+                                class="fa-solid fa-arrow-right text-xs transition-all duration-300 ease-in group-hover:translate-x-1"></i>
+                        </button>
+                    </a>
+
+                </div>
+            </div>
+
+
+
+
+            <!-- Professional Loan Plan -->
+            <div id="professional"
+                class="bg-[#f0fff7] rounded-2xl relative lg:p-5 lg:px-5 2xl:py-10 2xl:px-10 2xl:mx-5 xl:px-10 p-8 group transition-all duration-500 text-center hover:-translate-y-1 sm:px-16 md:mx-16 lg:mx-0 border border-2 border-[#12a16a59]">
+
+                <!-- Recommended Badge -->
+                <div class="absolute -top-4 inset-x-0 flex justify-center">
+                    <div
+                        class="bg-[#12a16b] text-white lg:px-4 lg:py-1 px-4 py-1 rounded-full lg:text-[12px] text-[12px] font-semibold 2xl:py-2 2xl:px-5 2xl:text-[15px]">
+                        Recommended
+                    </div>
+                </div>
+
+                <!-- Icon -->
+                <div class="text-[#12a16b] text-2xl mb-10 p-4 rounded-xl bg-[#E7F5F0] inline-block shadow-md">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <!-- Title -->
+                <h3 class="text-3xl lg:text-2xl text-gray-800 font-semibold mb-8">Professional</h3>
+                <!-- Price -->
+                <div class="lg:text-2xl text-xl font-bold text-[#12a16b] mb-8">
+                    PKR 150,000 <span class="text-xl lg:text-[18px] text-gray-500">/month</span>
+                </div>
+                <!-- Description -->
+                <p class="text-gray-600 mb-12 max-w-md mx-auto">
+                    For professionals, higher limits and better interest rates with easy EMI options.
+                </p>
+                <!-- Points -->
+                <ul class="space-y-4 mb-10 text-gray-600 text-left">
+                    <li class="flex items-center gap-2 mb-6"><i class="fa-solid fa-check text-[#12a16b]"></i>Higher loan
+                        limits</li>
+                    <li class="flex items-center gap-2 mb-8"><i class="fa-solid fa-check text-[#12a16b]"></i>Priority
+                        support</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-[#12a16b]"></i>Flexible EMIs
+                    </li>
+                </ul>
+                <!-- Button -->
+                <div class="flex justify-center">
+                    <a href="payment.html">
+                        <button
+                            class="bg-[#12a16b] text-[#E7F5F0] px-5 py-2.5 rounded-full text-sm flex items-center gap-2 transition-all duration-300 ease-in group hover:bg-[#1db97e]">
+                            Apply Now
+                            <i
+                                class="fa-solid fa-arrow-right text-xs transition-all duration-300 ease-in group-hover:translate-x-1"></i>
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+
+
+
+            <!-- ultimate Loan Plan -->
+            <div id="ultimate"
+                class="bg-white rounded-2xl lg:p-5 2xl:py-10 2xl:px-10 p-5 relative group transition-all duration-500 text-center sm:px-16 md:mx-16 lg:mx-0 lg:ml-3 hover:-translate-y-1">
+                <!-- Icon -->
+                <div class="text-[#12a16b] text-2xl mb-10 p-4 rounded-xl bg-[#E7F5F0] inline-block shadow-md">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <!-- Title -->
+                <h3 class="text-3xl lg:text-2xl text-gray-800 font-semibold mb-8">Ultimate</h3>
+                <!-- Price -->
+                <div class="lg:text-2xl text-xl font-bold text-[#12a16b] mb-8">
+                    PKR 500,000 <span class="text-xl lg:text-[18px] text-gray-500">/month</span>
+                </div>
+                <!-- Description -->
+                <p class="text-gray-600 mb-12 max-w-md mx-auto">
+                    For big loans and businesses, fast approval with personalized plans and low interest.
+                </p>
+                <!-- Points -->
+                <ul class="space-y-4 mb-10 text-gray-600 text-left">
+                    <li class="flex items-center gap-2 mb-6"><i class="fa-solid fa-check text-[#12a16b]"></i>High loan
+                        amount</li>
+                    <li class="flex items-center gap-2 mb-8"><i class="fa-solid fa-check text-[#12a16b]"></i>Custom
+                        repayment options</li>
+                    <li class="flex items-center gap-2 "><i class="fa-solid fa-check text-[#12a16b]"></i>Fast approval
+                    </li>
+                </ul>
+                <!-- Button -->
+                <div class="flex justify-center">
+                    <a href="payment.html">
+                        <button
+                            class="bg-[#E7F5F0] text-[#12a16b] px-5 py-2.5 rounded-full text-sm flex items-center gap-2 transition-all duration-300 ease-in group hover:bg-[#12a16b] hover:text-[#E7F5F0]">
+                            Apply Now
+                            <i
+                                class="fa-solid fa-arrow-right text-xs transition-all duration-300 ease-in group-hover:translate-x-1"></i>
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+        <section id="faq" class="py-16">
+            <!-- Section Title -->
+            <div class="text-center mb-12 sm:px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Frequently Asked Questions</h2>
+                <div class="relative w-full mt-3 mb-5 h-[3px] flex justify-center items-center">
+                    <!-- Gray full line -->
+                    <div class="w-50 h-[1px] bg-gray-400"></div>
+                    <!-- Center green line -->
+                    <div class="w-18 h-[4px] absolute bg-[#12a16b] rounded-full"></div>
+                </div>
+                <p class="text-gray-600 mt-3 max-w-2xl mx-auto">
+                    Common questions about our banking services and loans, answered for your ease.
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="space-y-4 sm:px-10">
+
+                    <!-- FAQ Item -->
+                    <div
+                        class="faq-item bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 border hover:border-l-[#2bbd85] hover:border-l-[5px] hover:shadow-2xl hover:drop-shadow-2xl">
+                        <button
+                            class="faq-btn w-full flex items-center justify-between px-6 py-4 text-left text-gray-800 font-medium group">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="bg-[#E7F5F0] rounded-full px-2 py-1 group-hover:bg-[#12a16b] transition-colors duration-300">
+                                    <i
+                                        class="fa-regular fa-circle-question text-[#12a16b] group-hover:text-white text-xl"></i>
+                                </div>
+                                <span class="group-hover:text-[#12a16b] transition-colors duration-300">How can I open a
+                                    new bank account?</span>
+                            </div>
+                            <div
+                                class="icon-box bg-gray-200 text-gray-900 px-2 py-1 rounded-full text-[10px] group-hover:bg-[#12a16b] transition-colors duration-300">
+                                <i
+                                    class="fa-solid fa-plus icon transition-transform duration-300 group-hover:text-white"></i>
+                            </div>
+                        </button>
+                        <div
+                            class="faq-content px-6 pb-0 text-gray-600 max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                            You can open an account by providing your CNIC and required documents at any of our
+                            branches.
+                            The process is simple and usually takes less than 30 minutes.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item -->
+                    <div
+                        class="faq-item bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 border hover:border-l-[#2bbd85] hover:border-l-[5px] hover:shadow-2xl hover:drop-shadow-2xl">
+                        <button
+                            class="faq-btn w-full flex items-center justify-between px-6 py-4 text-left text-gray-800 font-medium group">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="bg-[#E7F5F0] rounded-full px-2 py-1 group-hover:bg-[#12a16b] transition-colors duration-300">
+                                    <i
+                                        class="fa-regular fa-circle-question text-[#12a16b] group-hover:text-white text-xl"></i>
+                                </div>
+                                <span class="group-hover:text-[#12a16b] transition-colors duration-300">What documents
+                                    are required for a personal loan?</span>
+                            </div>
+                            <div
+                                class="icon-box bg-gray-200 text-gray-900 px-2 py-1 rounded-full text-[10px] group-hover:bg-[#12a16b] transition-colors duration-300">
+                                <i
+                                    class="fa-solid fa-plus icon transition-transform duration-300 group-hover:text-white"></i>
+                            </div>
+                        </button>
+                        <div
+                            class="faq-content px-6 pb-0 text-gray-600 max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                            Required documents usually include CNIC, recent salary slips or business proof,
+                            and bank statements of the last 6 months.
+                        </div>
+                    </div>
+
+
+                    <!-- FAQ Item -->
+                    <div
+                        class="faq-item bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 border hover:border-l-[#2bbd85] hover:border-l-[5px] hover:shadow-2xl hover:drop-shadow-2xl">
+                        <button
+                            class="faq-btn w-full flex items-center justify-between px-6 py-4 text-left text-gray-800 font-medium group">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="bg-[#E7F5F0] rounded-full px-2 py-1 group-hover:bg-[#12a16b] transition-colors duration-300">
+                                    <i
+                                        class="fa-regular fa-circle-question text-[#12a16b] group-hover:text-white text-xl"></i>
+                                </div>
+                                <span class="group-hover:text-[#12a16b] transition-colors duration-300">What is the
+                                    minimum loan amount I can apply for?</span>
+                            </div>
+                            <div
+                                class="icon-box bg-gray-200 text-gray-900 px-2 py-1 rounded-full text-[10px] group-hover:bg-[#12a16b] transition-colors duration-300">
+                                <i
+                                    class="fa-solid fa-plus icon transition-transform duration-300 group-hover:text-white"></i>
+                            </div>
+                        </button>
+                        <div
+                            class="faq-content px-6 pb-0 text-gray-600 max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                            The minimum loan amount is PKR 50,000. Higher loan amounts depend on your income and
+                            repayment capacity.
+                        </div>
+                    </div>
+
+
+                    <!-- FAQ Item -->
+                    <div
+                        class="faq-item bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 border hover:border-l-[#2bbd85] hover:border-l-[5px] hover:shadow-2xl hover:drop-shadow-2xl">
+                        <button
+                            class="faq-btn w-full flex items-center justify-between px-6 py-4 text-left text-gray-800 font-medium group">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="bg-[#E7F5F0] rounded-full px-2 py-1 group-hover:bg-[#12a16b] transition-colors duration-300">
+                                    <i
+                                        class="fa-regular fa-circle-question text-[#12a16b] group-hover:text-white text-xl"></i>
+                                </div>
+                                <span class="group-hover:text-[#12a16b] transition-colors duration-300">Can I repay my
+                                    loan early?</span>
+                            </div>
+                            <div
+                                class="icon-box bg-gray-200 text-gray-900 px-2 py-1 rounded-full text-[10px] group-hover:bg-[#12a16b] transition-colors duration-300">
+                                <i
+                                    class="fa-solid fa-plus icon transition-transform duration-300 group-hover:text-white"></i>
+                            </div>
+                        </button>
+                        <div
+                            class="faq-content px-6 pb-0 text-gray-600 max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                            Yes, you can repay your loan before the due term. Some early settlement charges may apply
+                            depending on the loan type.
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item -->
+                    <div
+                        class="faq-item bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 border hover:border-l-[#2bbd85] hover:border-l-[5px] hover:shadow-2xl hover:drop-shadow-2xl">
+                        <button
+                            class="faq-btn w-full flex items-center justify-between px-6 py-4 text-left text-gray-800 font-medium group">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="bg-[#E7F5F0] rounded-full px-2 py-1 group-hover:bg-[#12a16b] transition-colors duration-300">
+                                    <i
+                                        class="fa-regular fa-circle-question text-[#12a16b] group-hover:text-white text-xl"></i>
+                                </div>
+                                <span class="group-hover:text-[#12a16b] transition-colors duration-300">Is internet
+                                    banking available with my account?</span>
+                            </div>
+                            <div
+                                class="icon-box bg-gray-200 text-gray-900 px-2 py-1 rounded-full text-[10px] group-hover:bg-[#12a16b] transition-colors duration-300">
+                                <i
+                                    class="fa-solid fa-plus icon transition-transform duration-300 group-hover:text-white"></i>
+                            </div>
+                        </button>
+                        <div
+                            class="faq-content px-6 pb-0 text-gray-600 max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                            Yes, all our accounts come with internet and mobile banking facilities so you can manage
+                            your finances anytime.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div>
+
+
+
+            <section id="call-to-action" class="relative py-16 bg-[#F1F8F5]">
+                <div class="container mx-auto">
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden relative">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                            <!-- Content -->
+                            <!-- Image Section -->
+                            <div
+                                class="relative flex items-center justify-center p-4 sm:p-8 group transition-all duration-300 ease-in-out hover:scale-105">
+
+                                <!-- Responsive Image -->
+                                <img src="assets/content.png" alt="Illustration"
+                                    class="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg  xl:max-w-xl rounded-xl object-contain">
+
+                                <!-- Floating Elements -->
+                                <!-- Rating Badge -->
+                                <div
+                                    class="absolute top-3 sm:top-6 right-3 sm:right-6 bg-white shadow-lg px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm flex items-center gap-1 sm:gap-2 animate-bounce-slow lg:top-36 xl:top-20 2xl:top-14">
+                                    <i class="fa fa-star text-yellow-400"></i>
+                                    <span>4.9 Rating</span>
+                                </div>
+
+                                <!-- Users Badge -->
+                                <div
+                                    class="absolute bottom-3 sm:bottom-6 left-3 sm:left-6 bg-white shadow-lg px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm flex items-center gap-1 sm:gap-2 animate-bounce-slow lg:bottom-36 xl:bottom-20 2xl:bottom-14">
+                                    <i class="fa-solid fa-users text-blue-500"></i>
+                                    <span>10k+ Users</span>
+                                </div>
+                            </div>
+
+
+
+                            <div class="p-8 lg:p-12 sm:px-14">
+
+                                <span
+                                    class="text-sm font-semibold px-4 py-1 rounded-full bg-[#E7F5F0] text-[#12a16b] uppercase">
+                                    Premium Offer
+                                </span>
+
+                                <h2 class="mt-6 mb-4 text-3xl font-bold text-gray-900">
+                                    Transform Your Experience With Our Solution
+                                </h2>
+                                <p class="mb-6 text-gray-600">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua.
+                                </p>
+
+                                <!-- Benefits -->
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="text-xl text-white bg-[#12a16b] rounded-lg py-1 px-2">
+                                            <i class="fa-solid fa-bolt"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-800">Quick Setup</h5>
+                                            <p class="text-sm text-gray-600">Lorem ipsum dolor sit amet, consectetur.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-start space-x-3">
+                                        <div class="text-2xl text-xl text-white bg-[#12a16b] rounded-lg py-1 px-2">
+                                            <i class="fa-solid fa-shield"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-800">Full Security</h5>
+                                            <p class="text-sm text-gray-600">Sed ut perspiciatis unde omnis iste natus
+                                                error.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Buttons -->
+                                <div class="flex items-center gap-4 flex-wrap sm:flex-nowrap sm:gap-6">
+                                    <a href="register.html"
+                                        class="px-6 py-3 rounded-lg font-semibold text-white bg-[#12a16b] hover:bg-[#0f774f]  lg:w-auto w-full text-center transition-all duration-[300ms] ease-in">
+                                        Start Now
+                                    </a>
+                                    <a href="#about"
+                                        class="px-6 py-3 rounded-lg font-semibold hover:bg-[#E7F5F0] border-[2px]  lg:w-auto w-full text-center transition-all duration-[300ms] ease-in"
+                                        style="border-color:#12a16b; color:#12a16b;">
+                                        Learn More
+                                    </a>
+                                </div>
+                                <div class="flex items-center gap-2 text-gray-600 text-sm mt-5">
+                                    <div
+                                        class="bg-[#12a16b] rounded-full border-dotted border-white border-[3px] px-2 py-1">
+                                        <i class="fa-solid fa-check text-white"></i>
+                                    </div>
+                                    <span class="text-black font-semibold">30-Day Money Back</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Testimonials Section -->
+            <section id="testimonials" class="py-16 bg-gray-50">
+                <div class="container mx-auto px-4">
+                    <!-- Title -->
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800">What Our Customers Say</h2>
+                        <div class="relative w-full mt-3 mb-5 h-[3px] flex justify-center items-center">
+                            <!-- Gray full line -->
+                            <div class="w-50 h-[1px] bg-gray-400"></div>
+                            <!-- Center green line -->
+                            <div class="w-18 h-[4px] absolute bg-[#12a16b] rounded-full"></div>
+                        </div>
+                        <p class="text-gray-600 mt-2">Trusted by thousands of banking customers nationwide</p>
+                    </div>
+
+                    <!-- Glide Slider -->
+                    <div class="glide">
+                        <div class="glide__track" data-glide-el="track">
+                            <ul class="glide__slides">
+
+                                <!-- Testimonial Item -->
+                                <li class="glide__slide">
+                                    <div class="bg-white shadow-md rounded-xl p-6 text-center">
+                                        <p class="text-gray-600 italic mb-4 bg-[#F8F8F8] p-2">
+                                            <i class="fa-solid fa-quote-left text-[#12a16b] mr-2"></i>
+                                            I opened my savings account within minutes. The process was smooth and staff
+                                            were very supportive!
+                                            <i class="fa-solid fa-quote-right text-[#12a16b] ml-2"></i>
+                                        </p>
+                                        <img src="assets/Sara Wilsson.webp" alt="client"
+                                            class="w-16 h-16 rounded-full mx-auto mb-3">
+                                        <h3 class="font-bold text-gray-800">Sara Wilsson</h3>
+                                        <h4 class="text-sm text-[#12a16b]">Bank Customer</h4>
+                                    </div>
+                                </li>
+
+                                <!-- Testimonial Item -->
+                                <li class="glide__slide">
+                                    <div class="bg-white shadow-md rounded-xl p-6 text-center">
+                                        <p class="text-gray-600 italic mb-4 bg-[#F8F8F8] p-2">
+                                            <i class="fa-solid fa-quote-left text-[#12a16b] mr-2"></i>
+                                            Their mobile app makes it so easy to transfer funds and pay bills. Highly
+                                            recommended!
+                                            <i class="fa-solid fa-quote-right text-[#12a16b] ml-2"></i>
+                                        </p>
+                                        <img src="assets/Jena Karlis.webp" alt="client"
+                                            class="w-16 h-16 rounded-full mx-auto mb-3">
+                                        <h3 class="font-bold text-gray-800">Jena Karlis</h3>
+                                        <h4 class="text-sm text-[#12a16b]">Business Owner</h4>
+                                    </div>
+                                </li>
+
+                                <!-- Testimonial Item -->
+                                <li class="glide__slide">
+                                    <div class="bg-white shadow-md rounded-xl p-6 text-center">
+                                        <p class="text-gray-600 italic mb-4 bg-[#F8F8F8] p-2">
+                                            <i class="fa-solid fa-quote-left text-[#12a16b] mr-2"></i>
+                                            Customer support is always available and friendly. They guided me through
+                                            every step of my loan application.
+                                            <i class="fa-solid fa-quote-right text-[#12a16b] ml-2"></i>
+                                        </p>
+                                        <img src="assets/Matt Brandon.webp" alt="client"
+                                            class="w-16 h-16 rounded-full mx-auto mb-3">
+                                        <h3 class="font-bold text-gray-800">Matt Brandon</h3>
+                                        <h4 class="text-sm text-[#12a16b]">Freelancer</h4>
+                                    </div>
+                                </li>
+
+                                <!-- Testimonial Item -->
+                                <li class="glide__slide">
+                                    <div class="bg-white shadow-md rounded-xl p-6 text-center">
+                                        <p class="text-gray-600 italic mb-4 bg-[#F8F8F8] p-2">
+                                            <i class="fa-solid fa-quote-left text-[#12a16b] mr-2"></i>
+                                            The bank’s credit card rewards are excellent. I’ve saved so much on shopping
+                                            and travel!
+                                            <i class="fa-solid fa-quote-right text-[#12a16b] ml-2"></i>
+                                        </p>
+                                        <img src="assets/John Larson.webp" alt="client"
+                                            class="w-16 h-16 rounded-full mx-auto mb-3">
+                                        <h3 class="font-bold text-gray-800">John Larson</h3>
+                                        <h4 class="text-sm text-[#12a16b]">Entrepreneur</h4>
+                                    </div>
+                                </li>
+
+                                <!-- Testimonial Item -->
+                                <li class="glide__slide">
+                                    <div class="bg-white shadow-md rounded-xl p-6 text-center">
+                                        <p class="text-gray-600 italic mb-4 bg-[#F8F8F8] p-2">
+                                            <i class="fa-solid fa-quote-left text-[#12a16b] mr-2"></i>
+                                            I feel safe banking here. The security measures and quick service give me
+                                            peace of mind.
+                                            <i class="fa-solid fa-quote-right text-[#12a16b] ml-2"></i>
+                                        </p>
+                                        <img src="assets/Saul Goodman.webp" alt="client"
+                                            class="w-16 h-16 rounded-full mx-auto mb-3">
+                                        <h3 class="font-bold text-gray-800">Saul Goodman</h3>
+                                        <h4 class="text-sm text-[#12a16b]">CEO & Founder</h4>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <!-- Pagination Dots -->
+                        <div class="flex justify-center mt-6" data-glide-el="controls[nav]">
+                            <button data-glide-dir="=0"></button>
+                            <button data-glide-dir="=1"></button>
+                            <button data-glide-dir="=2"></button>
+                            <button data-glide-dir="=3"></button>
+                            <button data-glide-dir="=4"></button>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Team Section -->
+            <section id="team" class="py-16 bg-gray-50">
+                <div class="container mx-auto px-4">
+                    <!-- Section Title -->
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800">Our Banking Team</h2>
+                        <div class="relative w-full mt-3 mb-5 h-[3px] flex justify-center items-center">
+                            <!-- Gray full line -->
+                            <div class="w-50 h-[1px] bg-gray-400"></div>
+                            <!-- Center green line -->
+                            <div class="w-18 h-[4px] absolute bg-[#12a16b] rounded-full"></div>
+                        </div>
+                        <p class="text-gray-600 mt-2">Meet the dedicated professionals behind our trusted banking
+                            services</p>
+                    </div>
+
+                    <!-- Swiper Slider -->
+                    <div class="swiper bank-team-swiper">
+                        <div class="swiper-wrapper">
+
+                            <!-- Team Member -->
+                            <div class="swiper-slide">
+                                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
+                                    <div class="relative group">
+                                        <img src="assets/Marcus Wilson.webp" alt="Marcus Wilson" class="">
+                                        <div
+                                            class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition">
+                                            <div class="flex space-x-2">
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-2 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1 -mr-0.5"><i
+                                                        class="fab fa-twitter"></i></a>
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-3 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1"><i
+                                                        class="fab fa-facebook-f"></i></a>
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-2 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1"><i
+                                                        class="fab fa-instagram"></i></a>
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-2 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1"><i
+                                                        class="fab fa-linkedin-in"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-6 text-center">
+                                        <h3 class="font-semibold text-gray-800">Marcus Wilson</h3>
+                                        <span class="text-[#12a16b] text-sm">Chief Technology Officer</span>
+                                        <p class="text-gray-600 text-sm mt-3">Driving banking innovation through
+                                            advanced technology and excellence.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Team Member -->
+                            <div class="swiper-slide">
+                                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
+                                    <div class="relative group">
+                                        <img src="assets/Sophia Reynolds.webp" alt="Sophia Reynolds" class="">
+                                        <div
+                                            class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition">
+                                            <div class="flex space-x-3">
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-2 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1 -mr-0.5"><i
+                                                        class="fab fa-twitter"></i></a>
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-3 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1"><i
+                                                        class="fab fa-facebook-f"></i></a>
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-2 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1"><i
+                                                        class="fab fa-instagram"></i></a>
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-2 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1"><i
+                                                        class="fab fa-linkedin-in"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-6 text-center">
+                                        <h3 class="font-semibold text-gray-800">Sophia Reynolds</h3>
+                                        <span class="text-[#12a16b] text-sm">Product Designer</span>
+                                        <p class="text-gray-600 text-sm mt-3">Designing seamless banking experiences for
+                                            all our customers.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Team Member -->
+                            <div class="swiper-slide">
+                                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
+                                    <div class="relative group">
+                                        <img src="assets/Daniel Chen.webp" alt="Daniel Chen" class="">
+                                        <div
+                                            class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition">
+                                            <div class="flex space-x-3">
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-2 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1 -mr-0.5"><i
+                                                        class="fab fa-twitter"></i></a>
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-3 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1"><i
+                                                        class="fab fa-facebook-f"></i></a>
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-2 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1"><i
+                                                        class="fab fa-instagram"></i></a>
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-2 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1"><i
+                                                        class="fab fa-linkedin-in"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-6 text-center">
+                                        <h3 class="font-semibold text-gray-800">Daniel Chen</h3>
+                                        <span class="text-[#12a16b] text-sm">Marketing Specialist</span>
+                                        <p class="text-gray-600 text-sm mt-3">Helping clients discover our banking
+                                            solutions through marketing.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Team Member -->
+                            <div class="swiper-slide">
+                                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
+                                    <div class="relative group">
+                                        <img src="assets/Olivia Thompson.webp" alt="Olivia Thompson" class="">
+                                        <div
+                                            class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition">
+                                            <div class="flex space-x-3">
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-2 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1 -mr-0.5"><i
+                                                        class="fab fa-twitter"></i></a>
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-3 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1"><i
+                                                        class="fab fa-facebook-f"></i></a>
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-2 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1"><i
+                                                        class="fab fa-instagram"></i></a>
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-2 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1"><i
+                                                        class="fab fa-linkedin-in"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-6 text-center">
+                                        <h3 class="font-semibold text-gray-800">Olivia Thompson</h3>
+                                        <span class="text-[#12a16b] text-sm">Lead Developer</span>
+                                        <p class="text-gray-600 text-sm mt-3">Building secure and reliable banking
+                                            platforms for millions of users.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Team Member -->
+                            <div class="swiper-slide">
+                                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
+                                    <div class="relative group">
+                                        <img src="assets/Jason Parker.webp" alt="Jason Parker" class="">
+                                        <div
+                                            class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition">
+                                            <div class="flex space-x-3">
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-2 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1 -mr-0.5"><i
+                                                        class="fab fa-twitter"></i></a>
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-3 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1"><i
+                                                        class="fab fa-facebook-f"></i></a>
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-2 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1"><i
+                                                        class="fab fa-instagram"></i></a>
+                                                <a href="#"
+                                                    class="text-white text-xl  bg-[#12a16b] rounded-full py-1 px-2 hover:bg-[#118b5c] transition-all duration-[300ms] ease-in hover:-translate-y-1"><i
+                                                        class="fab fa-linkedin-in"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-6 text-center">
+                                        <h3 class="font-semibold text-gray-800">Jason Parker</h3>
+                                        <span class="text-[#12a16b] text-sm">UI/UX Designer</span>
+                                        <p class="text-gray-600 text-sm mt-3">Crafting user-friendly designs that make
+                                            banking simpler for everyone.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Pagination + Nav -->
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-prev text-[#12a16b]"></div>
+                        <div class="swiper-button-next text-[#12a16b]"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="py-16 bg-gray-50">
+                <div class="max-w-[93rem] mx-auto px-4">
+                    <!-- Section Title -->
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800">Contact Us</h2>
+                        <div class="relative w-full mt-3 mb-5 h-[3px] flex justify-center items-center">
+                            <!-- Gray full line -->
+                            <div class="w-50 h-[1px] bg-gray-400"></div>
+                            <!-- Center green line -->
+                            <div class="w-18 h-[4px] absolute bg-[#12a16b] rounded-full"></div>
+                        </div>
+                        <p class="text-gray-600 mt-2">Reach out to our banking experts for trusted financial support</p>
+                    </div>
+
+                    <div class="grid lg:grid-cols-2 gap-10 sm:px-5 md:px-10">
+
+                        <!-- Map -->
+                        <div class="w-full h-96 lg:h-full rounded-xl overflow-hidden shadow-md 2xl:w-full">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus"
+                                class="w-full h-full border-0" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+
+                        <!-- Contact Content -->
+                        <div class="flex flex-col justify-center">
+
+                            <!-- Contact Cards -->
+                            <div class="grid sm:grid-cols-1 gap-6 mb-8 2xl:grid-cols-2 2xl:gap-8">
+
+                                <div
+                                    class="flex items-start space-x-4 bg-white shadow-md p-5 rounded-xl transition-all duration-[300ms] ease-in hover:shadow-lg hover:shadow-gray-400 hover:-translate-y-1 2xl:w-80">
+                                    <div
+                                        class="w-20 h-12 flex items-center justify-center rounded-full bg-[#E7F5F0] text-[#12a16b] text-xl">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">Location</h4>
+                                        <p class="text-gray-600 text-sm">8721 Broadway Avenue, New York, NY 10023</p>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-start space-x-4 bg-white shadow-md p-5 rounded-xl transition-all duration-[300ms] ease-in hover:shadow-lg hover:shadow-gray-400 hover:-translate-y-1 2xl:w-80">
+                                    <div
+                                        class="w-12 h-12 flex items-center justify-center rounded-full bg-[#E7F5F0] text-[#12a16b] text-xl">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">Email</h4>
+                                        <p class="text-gray-600 text-sm">support@bankservices.com</p>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-start space-x-4 bg-white shadow-md p-5 rounded-xl transition-all duration-[300ms] ease-in hover:shadow-lg hover:shadow-gray-400 hover:-translate-y-1 2xl:w-80">
+                                    <div
+                                        class="w-12 h-12 flex items-center justify-center rounded-full bg-[#E7F5F0] text-[#12a16b] text-xl">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">Call</h4>
+                                        <p class="text-gray-600 text-sm">+1 (212) 555-7890</p>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex items-start space-x-4 bg-white shadow-md p-5 rounded-xl transition-all duration-[300ms] ease-in hover:shadow-lg hover:shadow-gray-400 hover:-translate-y-1 2xl:w-80">
+                                    <div
+                                        class="w-12 h-12 flex items-center justify-center rounded-full bg-[#E7F5F0] text-[#12a16b] text-xl">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">Open Hours</h4>
+                                        <p class="text-gray-600 text-sm">Mon - Fri: 9AM - 6PM</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Contact Form -->
+                            <div class="bg-white shadow-md rounded-xl p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2 border-l-[3px] border-[#12a16b] p-2 ">
+                                    Get in Touch</h3>
+                                <p class="text-gray-600 mb-6">Have questions about our banking services? Send us a
+                                    message and we’ll respond shortly.</p>
+                                <!-- IMPORTANT -->
+                                <!-- Form action "#" add backend script URL for send msg-->
+                                <!-- Example: "sendmail.php" OR EmailJS integration -->
+                                <!-- setup gmail (to PHP/Node/EmailJS ) -->
+                                <form action="sendmail.php" method="post" class="space-y-4">
+                                    <div class="grid md:grid-cols-2 gap-4">
+                                        <input type="text" name="name" placeholder="Your Name"
+                                            class="w-full border border-gray-300 rounded-lg px-4 py-2 bg-[#FCFDFE] focus:ring-2 focus:ring-[#12a16b] focus:outline-none"
+                                            required>
+                                        <input type="email" name="email" placeholder="Your Email"
+                                            class="w-full border border-gray-300 rounded-lg px-4 py-2 bg-[#FCFDFE] focus:ring-2 focus:ring-[#12a16b] focus:outline-none"
+                                            required>
+                                    </div>
+                                    <input type="text" name="subject" placeholder="Subject"
+                                        class="w-full border border-gray-300 rounded-lg px-4 py-2 bg-[#FCFDFE] focus:ring-2 focus:ring-[#12a16b] focus:outline-none"
+                                        required>
+                                    <textarea rows="5" name="message" placeholder="Message"
+                                        class="w-full border border-gray-300 rounded-lg px-4 py-2 bg-[#FCFDFE] focus:ring-2 focus:ring-[#12a16b] focus:outline-none"
+                                        required></textarea>
+
+                                    <div
+                                        class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-4">
+                                        <button type="submit"
+                                            class="bg-[#12a16b] text-white px-7 py-2.5 font-bold rounded-full shadow hover:bg-[#0d7048] transition-all duration-[200ms] ease-in hover:-translate-y-0.5">
+                                            Send Message
+                                        </button>
+                                        <div class="flex space-x-4 text-xl text-gray-600 ">
+                                            <a href="#"
+                                                class="hover:text-white hover:bg-[#12a16b] hover:py-1 hover:px-2 hover:rounded-full transition-all duration-[200ms] ease-in hover:-translate-y-1 -mr-0.5"><i
+                                                    class="fa-brands fa-twitter"></i></a>
+                                            <a href="#"
+                                                class="hover:text-white hover:bg-[#12a16b] hover:py-1 hover:px-2 hover:rounded-full transition-all duration-[200ms] ease-in hover:-translate-y-1"><i
+                                                    class="fa-brands fa-facebook"></i></a>
+                                            <a href="#"
+                                                class="hover:text-white hover:bg-[#12a16b] hover:py-1 hover:px-2 hover:rounded-full transition-all duration-[200ms] ease-in hover:-translate-y-1"><i
+                                                    class="fa-brands fa-instagram"></i></a>
+                                            <a href="#"
+                                                class="hover:text-white hover:bg-[#12a16b] hover:py-1 hover:px-2 hover:rounded-full transition-all duration-[200ms] ease-in hover:-translate-y-1"><i
+                                                    class="fa-brands fa-linkedin"></i></a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <footer class="bg-[#000704] text-gray-300 pt-12">
+                <div class="max-w-7xl mx-auto px-4 sm:px-10 lg:px-20 2xl:px-0 ">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-10 ">
+
+
+                        <!-- About Section -->
+                        <div class="">
+                            <a href="index.html" class="flex items-center mb-4">
+                                <img src="assets/logo.PNG" alt="ZarBank Logo" class="lg:h-14  h-14 ml-0 ">
+                                <span class="text-3xl font-bold -ml-1  text-[#12a16b]">Bank</span>
+                            </a>
+                            <p class="text-sm leading-relaxed md:text-xl">
+                                Info Bank is your trusted platform for knowledge, resources, and banking solutions.
+                                Stay updated with the latest insights and manage your financial journey with ease.
+                            </p>
+                            <div class="flex space-x-4 mt-4">
+                                <a href="#"
+                                    class="hover:text-emerald-500 border-[1px] border-gray-200 hover:border-[#12a16b] rounded-full px-2 py-1 transition-all duration-[200px] ease-in -mr-0.5"><i
+                                        class="fa-brands fa-twitter"></i></a>
+                                <a href="#"
+                                    class="hover:text-emerald-500 border-[1px] border-gray-200 hover:border-[#12a16b] rounded-full px-2 py-1 transition-all duration-[200px] ease-in"><i
+                                        class="fa-brands fa-facebook"></i></a>
+                                <a href="#"
+                                    class="hover:text-emerald-500 border-[1px] border-gray-200 hover:border-[#12a16b] rounded-full px-2 py-1 transition-all duration-[200px] ease-in"><i
+                                        class="fa-brands fa-instagram"></i></a>
+                                <a href="#"
+                                    class="hover:text-emerald-500 border-[1px] border-gray-200 hover:border-[#12a16b] rounded-full px-2 py-1 transition-all duration-[200px] ease-in"><i
+                                        class="fa-brands fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                        <div
+                            class="sm:flex sm:gap-14 grid sm:space-y-0 space-y-5 md:grid md:grid-cols-2 lg:flex lg:gap-30 xl:gap-36">
+                            <!-- Useful Links -->
+                            <div class="sm:none text-center lg:text-left">
+                                <h4
+                                    class="text-white text-lg font-semibold mb-4 border-l-[3px] border-emerald-500 pl-2">
+                                    Useful Links</h4>
+                                <ul class="space-y-2">
+                                    <li><a href="#"
+                                            class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Home</a>
+                                    </li>
+                                    <li><a href="#"
+                                            class="hover:text-emerald-500 transition-all duration-[200px] ease-in">About
+                                            Us</a></li>
+                                    <li><a href="#"
+                                            class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Services</a>
+                                    </li>
+                                    <li><a href="#"
+                                            class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Terms
+                                            of Service</a></li>
+                                    <li><a href="#"
+                                            class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Privacy
+                                            Policy</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Services -->
+                            <div class="lg:flex lg:gap-28 xl:gap-32">
+                                <div class="sm:none text-center">
+                                    <h4
+                                        class="text-white text-lg font-semibold mb-4 border-l-[3px] border-emerald-500 pl-2">
+                                        Our
+                                        Services</h4>
+                                    <ul class="space-y-2">
+                                        <li><a href="#"
+                                                class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Banking
+                                                Solutions</a></li>
+                                        <li><a href="#"
+                                                class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Investment
+                                                Plans</a></li>
+                                        <li><a href="#"
+                                                class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Financial
+                                                Advisory</a></li>
+                                        <li><a href="#"
+                                                class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Digital
+                                                Banking</a></li>
+                                        <li><a href="#"
+                                                class="hover:text-emerald-500 transition-all duration-[200px] ease-in">Customer
+                                                Support</a></li>
+                                    </ul>
+                                </div>
+                                <div class="grid text-center content-center md:hidden lg:block">
+                                    <div>
+                                        <h4 class="text-white text-lg font-semibold mb-4">
+                                            Contact Us</h4>
+                                        <p>A108 Adam Street</p>
+                                        <p>New York, NY 535022</p>
+                                        <p>United States</p>
+                                        <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+                                        <p><strong>Email:</strong> <span class="text-[#12a16b]">info@infobank.com</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Contact -->
+                            <div class="grid text-center content-center md:hidden lg:hidden">
+                                <div>
+                                    <h4 class="text-white text-lg font-semibold mb-4">
+                                        Contact Us</h4>
+                                    <p>A108 Adam Street</p>
+                                    <p>New York, NY 535022</p>
+                                    <p>United States</p>
+                                    <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+                                    <p><strong>Email:</strong> <span class="text-[#12a16b]">info@infobank.com</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <!-- Bottom bar -->
+                <div class=" mt-10 pt-6 pb-6 text-center text-sm text-gray-400 bg-[#0D1411] h-full">
+                    © 2025 <span class="text-[#12a16b] font-bold">ZarBank</span>. All Rights Reserved.
+                </div>
+            </footer>
+
+
+            <!-- Swiper Init -->
+            <script>
+                // navbar position
+
+                const navbar = document.getElementById("navbar");
+
+                window.addEventListener("scroll", () => {
+                    if (window.scrollY > 50) {
+                        navbar.classList.add("bg-black/40", "backdrop-blur");
+                    } else {
+                        navbar.classList.remove("bg-black/40", "backdrop-blur");
+                    }
+                });
+
+                // Dropdown toggle (works for both desktop & mobile)
+                function toggleDropdown(menuId, iconId) {
+                    let menu = document.getElementById(menuId);
+                    let icon = document.getElementById(iconId);
+
+                    if (menu.classList.contains("hidden")) {
+                        menu.classList.remove("hidden");
+                        icon.style.transform = "rotate(90deg)";
+                    } else {
+                        menu.classList.add("hidden");
+                        icon.style.transform = "rotate(0deg)";
+                    }
+                }
+
+                // Mobile menu toggle
+                const menuBtn = document.getElementById("menuBtn");
+                const menuIcon = document.getElementById("menuIcon");
+                const closeIcon = document.getElementById("closeIcon");
+                const mobileMenu = document.getElementById("mobileMenu");
+
+                menuBtn.addEventListener("click", () => {
+                    mobileMenu.classList.toggle("hidden");
+                    menuIcon.classList.toggle("hidden");
+                    closeIcon.classList.toggle("visible");
+                    menuIcon.classList.toggle("opacity-0");
+                    menuIcon.classList.toggle("rotate-90");
+
+                    closeIcon.classList.toggle("opacity-100");
+                    closeIcon.classList.toggle("rotate-0");
+                });
+
+
+                // underline making
+                const links = document.querySelectorAll(".nav-link");
+
+                links.forEach(link => {
+                    link.addEventListener("click", function (e) {
+                        e.preventDefault();
+
+                        // sab links se active underline hatado
+                        links.forEach(l => l.classList.remove("active-link"));
+
+                        // jis pe click hua usko active class do
+                        this.classList.add("active-link");
+                    });
+                });
+
+                // up down arrow
+                const scrollBtn = document.getElementById("scrollBtn");
+                const scrollIcon = document.getElementById("scrollIcon");
+
+                function scrollToPosition(target) {
+                    const start = window.scrollY;
+                    const distance = target - start;
+                    const duration = 200; // ms
+                    let startTime = null;
+
+                    function animation(currentTime) {
+                        if (!startTime) startTime = currentTime;
+                        const progress = Math.min((currentTime - startTime) / duration, 1);
+                        window.scrollTo(0, start + distance * progress);
+                        if (progress < 1) requestAnimationFrame(animation);
+                    }
+
+                    requestAnimationFrame(animation);
+                }
+
+                function updateButton() {
+                    const scrollTop = window.scrollY;
+                    const scrollHeight = document.documentElement.scrollHeight; // ✅ safe option
+                    const clientHeight = window.innerHeight; // ✅ mobile safe
+
+                    if (scrollTop + clientHeight >= scrollHeight - 5) {
+                        // bottom reached → arrow up
+                        scrollIcon.classList.remove("fa-arrow-down");
+                        scrollIcon.classList.add("fa-arrow-up");
+                        scrollBtn.onclick = () => scrollToPosition(0);
+                    } else if (scrollTop <= 0) {
+                        // top reached → arrow down
+                        scrollIcon.classList.remove("fa-arrow-up");
+                        scrollIcon.classList.add("fa-arrow-down");
+                        scrollBtn.onclick = () => scrollToPosition(scrollHeight);
+                    }
+                }
+
+                // 👇 mobile browsers ke liye scroll aur resize dono listen karo
+                window.addEventListener("scroll", updateButton);
+                window.addEventListener("resize", updateButton);
+                updateButton();
+
+
+                // swiping bank icons
+                const swiper = new Swiper(".mySwiper", {
+                    loop: true,
+                    slidesPerView: 3, // 3 logos dikhain at a time
+                    spaceBetween: 30,
+                    autoplay: {
+                        delay: 0, // bilkul bhi rukna nahi
+                        disableOnInteraction: false,
+                    },
+                    speed: 3000, // jitna zyada speed utna smooth continuous flow
+                    freeMode: true, // lagatar free scrolling effect
+                    freeModeMomentum: false, // rukawat na ho
+                    breakpoints: {
+                        640: { slidesPerView: 2 },
+                        1024: { slidesPerView: 4 },
+                    },
+                });
+
+                // Services Swiper 
+                const swiperServices = new Swiper(".mySwiperServices", {
+                    loop: true,
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                    speed: 800,
+                    breakpoints: {
+                        320: { slidesPerView: 1 },
+                        768: { slidesPerView: 2 },
+                        1024: { slidesPerView: 3 },
+                    },
+                    navigation: {
+                        nextEl: ".swiper-services-next",
+                        prevEl: ".swiper-services-prev",
+                    },
+                    allowTouchMove: false, // swipe sirf arrows se hoga
+                });
+
+                // JS for FAQ Accordion
+                document.querySelectorAll(".faq-item").forEach(item => {
+                    const btn = item.querySelector(".faq-btn");
+                    const content = item.querySelector(".faq-content");
+                    const icon = item.querySelector(".icon");
+
+                    btn.addEventListener("mouseenter", () => {
+                        // open answer
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        content.style.paddingBottom = "1rem";
+                        // icon change plus → minus
+                        icon.classList.remove("fa-plus");
+                        icon.classList.add("fa-minus");
+                    });
+
+                    btn.addEventListener("mouseleave", () => {
+                        // close answer
+                        content.style.maxHeight = "0px";
+                        content.style.paddingBottom = "0";
+                        // icon change minus → plus
+                        icon.classList.remove("fa-minus");
+                        icon.classList.add("fa-plus");
+                    });
+                });
+
+                //  reviews saying
+                new Glide('.glide', {
+                    type: 'carousel',
+                    autoplay: 4000,
+                    perView: 3,
+                    gap: 20,
+                    breakpoints: {
+                        1024: { perView: 2 },
+                        768: { perView: 1 }
+                    }
+                }).mount();
+
+                // Team section
+                const bankTeamSwiper = new Swiper('.bank-team-swiper', {
+                    loop: true,
+                    speed: 800,
+                    autoplay: { delay: 5000 },
+                    slidesPerView: 1,
+                    spaceBetween: 40,
+                    pagination: { el: '.swiper-pagination', clickable: true },
+                    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                    breakpoints: {
+                        576: { slidesPerView: 2 },
+                        992: { slidesPerView: 3 },
+                        1200: { slidesPerView: 4 },
+                    },
+                });
+                // user dp
+                // User data fetch
+                let user = JSON.parse(localStorage.getItem("user"));
+                let miniDp = document.getElementById("miniDp");
+                let icon = document.getElementById("floatingUserIcon");
+
+                if (user && user.dp) {
+                    miniDp.src = user.dp;
+                }
+
+                icon.addEventListener("click", function () {
+                    if (user) {
+                        if (user.loggedIn) {
+                            window.location.href = "account.html";
+                        } else {
+                            window.location.href = "login.html";
+                        }
+                    } else {
+                        window.location.href = "register.html";
+                    }
+                });
+            </script>
+</body>
+
+</html>
