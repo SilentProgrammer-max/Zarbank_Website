@@ -66,8 +66,7 @@
     <div class="absolute inset-0 bg-black opacity-80 h-265 sm:h-220 lg:h-200 2xl:h-240"></div>
 
     <!-- Navbar -->
-    <div id="navbar"
-        class="w-full py-3 flex items-center justify-between relative z-10 sm:justify-between lg:justify-between lg:px-10 2xl:px-10 sticky top-0 bg-transparent transition-all duration-300 mr-auto">
+<div id="navbar" class="w-full py-3 flex items-center justify-between z-10 sm:justify-between lg:justify-between lg:px-10 2xl:px-20 px-5 sticky top-0 bg-transparent transition-all duration-300 mr-auto">
         <!-- Left Logo -->
         <div class="flex">
             <img src="assets/logo.PNG" alt="ZarBank Logo" class="lg:h-14  h-14 ml-0 ">
@@ -76,7 +75,7 @@
 
 
         <!-- Hamburger Icon (Mobile) -->
-        <button id="menuBtn" class="sm:block md:block lg:hidden relative w-7 h-7 sm:ml-80 md:ml-96 ml-28">
+        <button id="menuBtn" class="block lg:hidden relative w-7 h-7">
             <!-- Hamburger -->
 
             <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -92,7 +91,7 @@
 
 
         <!-- Desktop Menu -->
-        <nav class="hidden lg:block lg:m-auto lg:block ">
+        <nav class="hidden lg:flex gap-6 items-center text-white">
             <ul class="flex gap-6 items-center text-white">
 
                 <li><a href="#home"
@@ -168,7 +167,7 @@
         </nav>
 
         <!-- Desktop Button -->
-        <a href="register.html">
+        <a href="register.html" class="hidden lg:block">
             <button
                 class="hidden lg:block text-white bg-gradient-to-br from-[#14b87a] via-[#12a16b] to-[#0e8055] hover:bg-gradient-to-bl focus:ring-2 focus:outline-none focus:ring-[#12a16acb] dark:focus:ring-green-900 font-medium rounded-full py-2 px-5 text-center cursor-pointer whitespace-nowrap transition hover:translate-y-1 duration-[200ms]  shadow-[0_0_25px_#33997a6e]">Click
                 Now</button>
@@ -2240,7 +2239,7 @@
                                 </div>
                             </div>
                             <!-- Contact -->
-                            <div class="hidden grid text-center content-center md:hidden lg:hidden">
+                            <div class="grid text-center content-center md:hidden lg:hidden">
                                 <div>
                                     <h4 class="text-white text-lg font-semibold mb-4">
                                         Contact Us</h4>
